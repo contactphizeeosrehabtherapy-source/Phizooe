@@ -1,0 +1,339 @@
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at top, #111, #000);
+  color: white;
+  overflow-x: hidden;
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 18px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+}
+
+.logo {
+  height: 42px;
+}
+
+.navbar a {
+  margin-left: 25px;
+  text-decoration: none;
+  color: #aaa;
+  transition: 0.3s;
+}
+
+.navbar a:hover {
+  color: rgb(194, 135, 17);
+}
+
+/* MOBILE NAVBAR */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .navbar nav {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  .logo {
+    height: 36px;
+  }
+}
+
+/* OFFSET FOR FIXED NAVBAR */
+.hero,
+.section,
+.about-phizeeo,
+#booking {
+  scroll-margin-top: 100px;
+}
+
+/* ================= HERO ================= */
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.holo-logo img {
+  width: 140px;
+  filter: drop-shadow(0 0 25px orange);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+}
+
+.typing {
+  margin-top: 30px;
+  font-size: 2rem;
+  letter-spacing: 3px;
+  color: orange;
+}
+
+.hero-sub {
+  margin-top: 10px;
+  opacity: 0.6;
+  letter-spacing: 4px;
+}
+
+/* HERO MOBILE */
+@media (max-width: 600px) {
+  .typing {
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+  }
+
+  .hero-sub {
+    font-size: 13px;
+    letter-spacing: 2px;
+  }
+
+  .holo-logo img {
+    width: 110px;
+  }
+}
+
+/* ================= SECTIONS ================= */
+.section {
+  padding: 120px 20px;
+  text-align: center;
+}
+
+.section h2 {
+  color: orange;
+  margin-bottom: 20px;
+}
+
+/* ================= CONNECT CARDS ================= */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.glass {
+  width: 200px;
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.05);
+  text-decoration: none;
+  color: white;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.glass i {
+  font-size: 2.3rem;
+  color: orange;
+  margin-bottom: 12px;
+}
+
+.glass:hover {
+  box-shadow: 0 0 30px rgb(126, 120, 107);
+}
+
+/* CARDS MOBILE */
+@media (max-width: 600px) {
+  .glass {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+
+/* ================= ABOUT PHIZEEO ================= */
+.about-phizeeo {
+  background: radial-gradient(circle at top, rgba(255,128,0,0.08), transparent 60%);
+  padding: 120px 20px;
+}
+
+.about-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 50px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(14px);
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,0.15);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+}
+
+.about-title {
+  font-size: 42px;
+  margin-bottom: 30px;
+  text-align: center;
+  background: linear-gradient(90deg, #ff8000, #ff4d00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-container p {
+  font-size: 17px;
+  line-height: 1.9;
+  color: #eaeaea;
+  margin-bottom: 22px;
+}
+
+.about-container span,
+.about-container strong {
+  color: #ff8000;
+}
+
+/* ABOUT MOBILE */
+@media (max-width: 768px) {
+  .about-container {
+    padding: 30px;
+  }
+
+  .about-title {
+    font-size: 32px;
+  }
+
+  .about-container p {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
+
+/* ================= BOOKING FORM ================= */
+form {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+form input,
+form textarea {
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #fff;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 10px;
+  outline: none;
+}
+
+form textarea {
+  resize: none;
+  min-height: 120px;
+}
+
+form button {
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  background: linear-gradient(135deg, #ff7700, #ff0000);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(255,140,0,0.4);
+}
+
+/* FORM MOBILE */
+@media (max-width: 600px) {
+  form {
+    width: 100%;
+    padding: 22px;
+  }
+
+  form input,
+  form textarea,
+  form button {
+    font-size: 14px;
+  }
+}
+
+/* ================= REVEAL ================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1s;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================= EFFECTS ================= */
+.cursor-glow {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: orange;
+  border-radius: 50%;
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 999;
+}
+
+.scanlines {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 2px,
+    transparent 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.noise {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  padding: 30px;
+  text-align: center;
+  opacity: 0.4;
+}
