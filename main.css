@@ -133,13 +133,17 @@ body {
 
 .holo-logo img {
     width: 160px;
-    height: 160px;              /* ✅ force equal */
-    aspect-ratio: 1 / 1;        /* ✅ safety */
+    height: 160px;
+    aspect-ratio: 1 / 1;
     border-radius: 50%;
     object-fit: cover;
     display: block;
     border: 3px solid #ffb300;
     box-shadow: 0 0 30px rgba(255,179,0,0.6);
+
+    /* FLOAT EFFECT */
+    animation: floatLogo 4s ease-in-out infinite;
+    will-change: transform;
 }
 
 
@@ -493,4 +497,16 @@ footer {
 @keyframes fade {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
+}
+/* ================= FLOATING LOGO EFFECT ================= */
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-18px);
+  }
+  100% {
+    transform: translateY(0);
+  }
 }
