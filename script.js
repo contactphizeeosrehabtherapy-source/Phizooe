@@ -1,4 +1,4 @@
-/* Typing Effect */
+/* Typing Effect *//* Typing Effect */
 const text = "Healing, Right at Your Home";
 let i = 0;
 const speed = 80;
@@ -66,3 +66,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 5000);
 
 });
+// HAMBURGER MENU
+const hamburger = document.getElementById("hamburger");
+const navMenu = document.getElementById("nav-menu");
+
+hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("open");
+});
+
+
