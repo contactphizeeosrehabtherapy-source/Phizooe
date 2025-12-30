@@ -27,6 +27,16 @@ body {
 
 .logo {
   height: 42px;
+  width: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 0 8px rgba(255 ,165 , 0,0.6);
+  
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .navbar a {
@@ -37,7 +47,7 @@ body {
 }
 
 .navbar a:hover {
-  color: rgb(194, 135, 17);
+  color: rgb(194, 159, 17);
 }
 
 /* MOBILE NAVBAR */
@@ -56,6 +66,8 @@ body {
 
   .logo {
     height: 36px;
+    
+
   }
 }
 
@@ -68,25 +80,71 @@ body {
 }
 
 /* ================= HERO ================= */
-.hero {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+/* NAVBAR LOGO - CIRCLE */
+.navbar {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
 }
+
+
+ .hero {
+    min-height: calc(100vh - 70px); /* navbar height */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+/* HERO LOGO CENTER */
+.holo-logo {
+        display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 
 .holo-logo img {
-  width: 140px;
-  filter: drop-shadow(0 0 25px orange);
-  animation: float 6s ease-in-out infinite;
+    width: 160px;
+    height: 160px;              /* ✅ force equal */
+    aspect-ratio: 1 / 1;        /* ✅ safety */
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    border: 3px solid #ffb300;
+    box-shadow: 0 0 30px rgba(255,179,0,0.6);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
+
+
+
+@media (max-width: 768px) {
+    .holo-logo img {
+        width: 130px;
+        height: 130px;   /* ✅ REQUIRED */
+    }
 }
+
+@media (max-width: 480px) {
+    .holo-logo img {
+        width: 110px;
+        height: 110px;   /* ✅ REQUIRED */
+    }
+}
+
+
+    .hero {
+        padding-top: 40px;
+    }
+
+
+
 
 .typing {
   margin-top: 30px;
@@ -336,4 +394,82 @@ footer {
   padding: 30px;
   text-align: center;
   opacity: 0.4;
+}
+/* REVIEWS SLIDER */
+.reviews {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.reviews-title {
+    color: #ffb300;
+    margin-bottom: 40px;
+}
+
+.review-slider {
+    max-width: 700px;
+    margin: auto;
+    position: relative;
+}
+
+.review-card {
+    display: none;
+    background: rgba(0,0,0,0.65);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid rgba(255,179,0,0.3);
+    box-shadow: 0 0 25px rgba(255,179,0,0.15);
+}
+
+.review-card.active {
+    display: block;
+    animation: fade 0.6s ease;
+}
+
+.review-text {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.review-card h3 {
+    margin: 10px 0 6px;
+}
+
+.review-stars i {
+    color: #ffb300;
+}
+
+.review-source {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.review-source i {
+    color: #34a853;
+}
+
+.review-dots {
+    margin-top: 20px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    display: inline-block;
+    border-radius: 50%;
+    background: #555;
+    cursor: pointer;
+}
+
+.dot.active {
+    background: #ffb300;
+}
+
+@keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
