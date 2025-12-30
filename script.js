@@ -40,3 +40,29 @@ document.querySelectorAll(".tilt").forEach(card => {
         card.style.transform = "rotateX(0) rotateY(0)";
     });
 });
+document.addEventListener("DOMContentLoaded", () => {
+
+    let reviewIndex = 0;
+    const reviews = document.querySelectorAll(".review-card");
+    const dots = document.querySelectorAll(".dot");
+
+    function showReview(index) {
+        reviews.forEach((review, i) => {
+            review.classList.toggle("active", i === index);
+            dots[i].classList.toggle("active", i === index);
+        });
+    }
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+            reviewIndex = i;
+            showReview(reviewIndex);
+        });
+    });
+
+    setInterval(() => {
+        reviewIndex = (reviewIndex + 1) % reviews.length;
+        showReview(reviewIndex);
+    }, 5000);
+
+});
