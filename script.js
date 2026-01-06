@@ -73,5 +73,12 @@ const navMenu = document.getElementById("nav-menu");
 hamburger.addEventListener("click", () => {
     navMenu.classList.toggle("open");
 });
+// LOGO INTRO DELAY (ensures clean load)
+window.addEventListener("load", () => {
+  const logo = document.querySelector(".holo-logo img");
+  logo.style.opacity = "1";
+});
+
+
 
 
