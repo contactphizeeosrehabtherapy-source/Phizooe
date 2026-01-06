@@ -1,4 +1,4 @@
-/* Typing Effect *//* Typing Effect */
+/* Typing Effect */
 const text = "Healing, Right at Your Home";
 let i = 0;
 const speed = 80;
@@ -73,12 +73,19 @@ const navMenu = document.getElementById("nav-menu");
 hamburger.addEventListener("click", () => {
     navMenu.classList.toggle("open");
 });
-// LOGO INTRO DELAY (ensures clean load)
+
+// REMOVE SPLASH, KEEP HERO LOGO
 window.addEventListener("load", () => {
-  const logo = document.querySelector(".holo-logo img");
-  logo.style.opacity = "1";
+  setTimeout(() => {
+    const splash = document.getElementById("splash");
+    if (splash) splash.remove();
+
+    // Force hero logo visibility after splash
+    const heroLogo = document.querySelector(".holo-logo img");
+    if (heroLogo) {
+      heroLogo.style.opacity = "1";
+      heroLogo.style.transform = "scale(1)";
+    }
+  }, 5200);
 });
-
-
-
 
