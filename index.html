@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>PhiZeeo |</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+
+
+<html>
 <link rel="stylesheet" href="main.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<a href="https://wa.me/6369601308" class="sticky-cta">
+  <i class="fab fa-whatsapp"></i> Book Now
+</a>
+
 </head>
 
 <body>
@@ -79,7 +81,105 @@
 
     </div>
 </section>
+<section id="services" class="section reveal services">
+  <h2>Our Services</h2>
 
+  <div class="service-grid">
+    <div class="service-card">
+      <i class="fas fa-house-medical"></i>
+      <h3>Home Visit Physiotherapy</h3>
+      <p>Professional physiotherapy treatment delivered at your home.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-bone"></i>
+      <h3>Orthopedic Rehab</h3>
+      <p>Pain relief & mobility recovery for joints, spine & fractures.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-brain"></i>
+      <h3>Neuro Rehabilitation</h3>
+      <p>Stroke, paralysis & neurological recovery programs.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-running"></i>
+      <h3>Sports Injury Rehab</h3>
+      <p>Injury recovery & performance training for athletes.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-child"></i>
+      <h3>Pediatric & Geriatric Care</h3>
+      <p>Specialized care for children & elderly patients.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <h2>How Treatment Works</h2>
+
+  <div class="service-grid">
+    <div class="service-card">
+      <h3>1. Assessment</h3>
+      <p>Complete physical evaluation at patient’s home.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>2. Treatment Plan</h3>
+      <p>Customized physiotherapy program.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>3. Therapy Sessions</h3>
+      <p>Hands-on treatment & guided exercises.</p>
+    </div>
+
+    <div class="service-card">
+      <h3>4. Recovery Guidance</h3>
+      <p>Progress tracking & home exercise support.</p>
+    </div>
+  </div>
+</section>
+<section class="section reveal">
+  <h2>Our Physiotherapy Specialists</h2>
+<div class = "therapist-grid">
+    <div class="therapist-card">
+      <img src="zeedr.png" alt="Dr Zeenith VR">
+      <h3>Dr. Zeenith VR</h3>
+      <p class="short">Senior Physiotherapist</p>
+      <button class="view-btn">View Details</button>
+
+      <div class="therapist-details">
+        <p>✔ Home practice since 2017</p>
+        <p>✔ Orthopedic & neurological rehab</p>
+        <p>✔ Pain management specialist</p>
+      </div>
+    </div>
+
+    <div class="therapist-card">
+      <img src="jdr.jpg" alt="Dr Josephine">
+      <h3>Dr. Josephine</h3>
+      <p class="short">Rehabilitation Specialist</p>
+      <button class="view-btn">View Details</button>
+
+      <div class="therapist-details">
+        <p>✔ Post-surgery rehabilitation</p>
+        <p>✔ Geriatric physiotherapy</p>
+        <p>✔ Stroke recovery therapy</p>
+      </div>
+    </div>
+</div>
+      <script>
+    document.querySelectorAll(".view-btn").forEach(button => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".therapist-card");
+        card.classList.toggle("active");
+      });
+    });
+  </script>
+</section>
 
 <!-- CONNECT -->
 <section id="connect" class="section reveal">
@@ -196,6 +296,7 @@
         <span class="dot"></span>
     </div>
 </section>
+
 
 
 </body>
