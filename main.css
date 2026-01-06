@@ -649,4 +649,50 @@ footer {
     box-shadow: 0 0 35px rgba(255,179,0,0.65);
   }
 }
+/* ===== MOBILE OPTIMIZED LOGO ANIMATION ===== */
+@media (max-width: 768px) {
+  .holo-logo img {
+    animation:
+      logoIntroMobile 1.4s ease-out forwards,
+      logoGlowMobile 1.6s ease-out forwards 0.7s,
+      floatLogo 4s ease-in-out infinite 2s;
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  @keyframes logoIntroMobile {
+    0% {
+      transform: scale(0);
+      opacity: 0;
+    }
+    70% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes logoGlowMobile {
+    from {
+      box-shadow: 0 0 0 rgba(255,179,0,0);
+    }
+    to {
+      box-shadow: 0 0 22px rgba(255,179,0,0.55);
+    }
+  }
+}
+
+/* EXTRA SMALL DEVICES */
+@media (max-width: 480px) {
+  .holo-logo img {
+    animation:
+      logoIntroMobile 1.3s ease-out forwards,
+      logoGlowMobile 1.5s ease-out forwards 0.6s,
+      floatLogo 4s ease-in-out infinite 1.8s;
+  }
+}
+
+
 
