@@ -615,3 +615,38 @@ footer {
     .therapist-card.active .therapist-details {
       display: block;
     }
+/* ===== LOGO INTRO ANIMATION (DO NOT AFFECT OTHER ELEMENTS) ===== */
+.holo-logo img {
+  animation:
+    logoIntro 1.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards,
+    logoGlow 1.8s ease-out forwards 0.8s,
+    floatLogo 4s ease-in-out infinite 2.2s;
+  transform: scale(0);
+  opacity: 0;
+}
+
+/* Zoom + Pop */
+@keyframes logoIntro {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Glow build-up */
+@keyframes logoGlow {
+  from {
+    box-shadow: 0 0 0 rgba(255,179,0,0);
+  }
+  to {
+    box-shadow: 0 0 35px rgba(255,179,0,0.65);
+  }
+}
+
