@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Reviews - Phizooe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            font-family: 'Segoe UI', sans-serif;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        .noise {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .scanlines {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.03),
+                rgba(255,255,255,0.03) 1px,
+                transparent 2px,
+                transparent 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: orange;
+            border-radius: 50%;
+            filter: blur(20px);
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        /* Navbar */
+        .navbar {
+            width: 100%;
+            padding: 12px 16px;
+            background: #000;
+            backdrop-filter: blur(6px);
+            position: fixed;
+            top: 0;
+            z-index: 999;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .nav-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .hamburger {
+            width: 26px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 2px;
+            background: #ffb300;
+            margin: 6px 0;
+            transition: 0.3s ease;
+        }
+
+        #nav-menu {
+            display: flex;
+            gap: 28px;
+            color: #ff7700;
+        }
+
+        #nav-menu a {
+            text-decoration: none;
+            font-size: 14px;
+            white-space: nowrap;
+            color: #ff7700;
+        }
+
+        #nav-menu a:hover {
+            color: #ffb300;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 100px;
+            position: relative;
+            z-index: 3;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 40px 20px 60px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            color: orange;
+            margin-bottom: 12px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            letter-spacing: 2px;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: rgb(6, 6, 6);
+            backdrop-filter: blur(14px);
+            border-radius: 22px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255,179,0,0.2);
+            box-shadow: 0 0 25px rgba(255, 115, 0, 0.1);
+        }
+
+        .form-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            background: linear-gradient(90deg, #ff8000, #ff4d00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #ff8000;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            color: #ffffff;
+            background: rgba(5, 5, 5, 0.3);
+            border: 1px solid rgba(255,179,0,0.2);
+            border-radius: 10px;
+            outline: none;
+            font-family: inherit;
+            transition: 0.3s;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff7700;
+            box-shadow: 0 0 15px rgba(255,140,0,0.2);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group .error-message {
+            color: #ff4444;
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: #ff4444;
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        /* Star Rating */
+        .star-rating {
+            display: flex;
+            gap: 8px;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+        }
+
+        .star-rating input {
+            display: none;
+        }
+
+        .star-rating label {
+            cursor: pointer;
+            font-size: 2rem;
+            color: #444;
+            transition: 0.3s;
+        }
+
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffb300;
+        }
+
+        .star-rating label:hover {
+            transform: scale(1.1);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #000;
+            background: linear-gradient(135deg, #ff7700, #ff0000);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,140,0,0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .submit-btn .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0, 0, 0, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+
+        .submit-btn.loading .spinner {
+            display: block;
+        }
+
+        .submit-btn.loading .btn-text {
+            opacity: 0.8;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Success/Error Messages */
+        .message {
+            padding: 14px 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .message.error {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            margin-top: 20px;
+        }
+
+        .reviews-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 24px;
+            background: linear-gradient(90deg, #ff8000, #ff4d00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reviews-count {
+            background: linear-gradient(135deg, #ff7700, #ff0000);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* No Reviews Message */
+        .no-reviews {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .no-reviews .icon {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .no-reviews h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ff8000;
+        }
+
+        .no-reviews p {
+            font-size: 0.95rem;
+            opacity: 0.7;
+        }
+
+        /* Review Cards */
+        .reviews-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .review-card {
+            background: rgba(5, 5, 5, 0.65);
+            backdrop-filter: blur(10px);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,179,0,0.2);
+            box-shadow: 0 0 25px rgba(255, 115, 0, 0.1);
+            transition: 0.3s;
+            animation: fadeInUp 0.4s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 35px rgba(255, 115, 0, 0.2);
+            border-color: rgba(255,179,0,0.4);
+        }
+
+        .review-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .review-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .review-meta {
+            flex: 1;
+        }
+
+        .review-name {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 2px;
+        }
+
+        .review-date {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .review-stars {
+            color: #ffb300;
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-text {
+            color: #e8e7e7;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            text-align: center;
+            opacity: 0.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+
+            #nav-menu {
+                flex-direction: column;
+                align-items: center;
+                gap: 18px;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.4s ease;
+                margin-top: 10px;
+            }
+
+            #nav-menu.open {
+                max-height: 300px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .form-section {
+                padding: 24px;
+            }
+
+            .review-card {
+                padding: 20px;
+            }
+
+            .review-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .form-section h2,
+            .reviews-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .star-rating label {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        :focus-visible {
+            outline: 2px solid #ff7700;
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="noise"></div>
+    <div class="scanlines"></div>
+    <div class="cursor-glow"></div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="nav-top">
+            <img src="logo2.jpeg" class="logo" alt="PhiZeeo logo">
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <nav id="nav-menu">
+            <a href="index.html">HOME</a>
+            <a href="#about">ABOUT</a>
+            <a href="#connect">CONNECT</a>
+            <a href="reviews.html">REVIEWS</a>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>CUSTOMER REVIEWS</h1>
+            <p>Share your experience with us</p>
+        </section>
+
+        <!-- Review Form Section -->
+        <section class="form-section" aria-labelledby="form-heading">
+            <h2 id="form-heading">Write a Review</h2>
+            <form id="review-form" novalidate>
+                <div class="form-group">
+                    <label for="reviewer-name">Your Name *</label>
+                    <input type="text" id="reviewer-name" name="name" placeholder="John Doe" required aria-required="true">
+                    <span class="error-message">Please enter your name</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Rating *</label>
+                    <div class="star-rating" role="radiogroup" aria-label="Rating">
+                        <input type="radio" id="star-5" name="rating" value="5" required aria-required="true">
+                        <label for="star-5" aria-label="5 stars">★</label>
+                        <input type="radio" id="star-4" name="rating" value="4">
+                        <label for="star-4" aria-label="4 stars">★</label>
+                        <input type="radio" id="star-3" name="rating" value="3">
+                        <label for="star-3" aria-label="3 stars">★</label>
+                        <input type="radio" id="star-2" name="rating" value="2">
+                        <label for="star-2" aria-label="2 stars">★</label>
+                        <input type="radio" id="star-1" name="rating" value="1">
+                        <label for="star-1" aria-label="1 star">★</label>
+                    </div>
+                    <span class="error-message">Please select a rating</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="review-text">Your Review *</label>
+                    <textarea id="review-text" name="review" placeholder="Share your experience with us..." required aria-required="true" minlength="10"></textarea>
+                    <span class="error-message">Please write at least 10 characters</span>
+                </div>
+
+                <button type="submit" class="submit-btn" aria-label="Submit review">
+                    <span class="btn-text">Submit Review</span>
+                    <span class="spinner"></span>
+                </button>
+
+                <div id="form-message" class="message" style="display: none;"></div>
+            </form>
+        </section>
+
+        <!-- Reviews Display Section -->
+        <section class="reviews-section" aria-labelledby="reviews-heading">
+            <h2 id="reviews-heading">
+                Reviews
+                <span class="reviews-count" id="reviews-count">0</span>
+            </h2>
+
+            <div id="reviews-container">
+                <!-- No Reviews Message -->
+                <div id="no-reviews" class="no-reviews" style="display: none;">
+                    <div class="icon">💬</div>
+                    <h3>No Reviews Yet</h3>
+                    <p>Be the first to share your experience!</p>
+                </div>
+
+                <!-- Reviews List -->
+                <div id="reviews-list" class="reviews-list"></div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>© 2025 PhiZeeo</footer>
+    </main>
+
+    <script>
+        // DOM Elements
+        const reviewForm = document.getElementById('review-form');
+        const reviewsList = document.getElementById('reviews-list');
+        const reviewsCount = document.getElementById('reviews-count');
+        const noReviews = document.getElementById('no-reviews');
+        const formMessage = document.getElementById('form-message');
+        const submitBtn = reviewForm.querySelector('.submit-btn');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+
+        // Storage key
+        const STORAGE_KEY = 'phizooe_reviews';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            loadReviews();
+        });
+
+        // Mobile menu toggle
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+        });
+
+        // Load reviews from localStorage
+        function loadReviews() {
+            const reviews = getReviews();
+            renderReviews(reviews);
+        }
+
+        // Get reviews from localStorage
+        function getReviews() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                return stored ? JSON.parse(stored) : [];
+            } catch (e) {
+                console.error('Error loading reviews:', e);
+                return [];
+            }
+        }
+
+        // Save review to localStorage
+        function saveReview(review) {
+            const reviews = getReviews();
+            reviews.unshift(review);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+            return reviews;
+        }
+
+        // Render reviews
+        function renderReviews(reviews) {
+            const count = reviews.length;
+            reviewsCount.textContent = count;
+
+            if (count === 0) {
+                noReviews.style.display = 'block';
+                reviewsList.innerHTML = '';
+                return;
+            }
+
+            noReviews.style.display = 'none';
+            reviewsList.innerHTML = reviews.map(review => createReviewCard(review)).join('');
+        }
+
+        // Create review card HTML
+        function createReviewCard(review) {
+            const initials = getInitials(review.name);
+            const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+            const date = formatDate(review.date);
+
+            return `
+                <article class="review-card" role="article" aria-label="Review by ${escapeHtml(review.name)}">
+                    <div class="review-card-header">
+                        <div class="review-avatar" aria-hidden="true">${initials}</div>
+                        <div class="review-meta">
+                            <div class="review-name">${escapeHtml(review.name)}</div>
+                            <div class="review-date">${date}</div>
+                        </div>
+                        <div class="review-stars" aria-label="${review.rating} out of 5 stars">${stars}</div>
+                    </div>
+                    <p class="review-text">${escapeHtml(review.text)}</p>
+                </article>
+            `;
+        }
+
+        // Get initials from name
+        function getInitials(name) {
+            return name
+                .split(' ')
+                .map(word => word.charAt(0).toUpperCase())
+                .slice(0, 2)
+                .join('');
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('en-US', options);
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Show form message
+        function showMessage(text, type) {
+            formMessage.textContent = text;
+            formMessage.className = `message ${type}`;
+            formMessage.style.display = 'flex';
+        }
+
+        // Hide form message
+        function hideMessage() {
+            formMessage.style.display = 'none';
+        }
+
+        // Clear form
+        function clearForm() {
+            reviewForm.reset();
+            hideMessage();
+        }
+
+        // Validate form
+        function validateForm() {
+            let isValid = true;
+
+            const nameInput = document.getElementById('reviewer-name');
+            const nameGroup = nameInput.closest('.form-group');
+            if (!nameInput.value.trim()) {
+                nameGroup.classList.add('error');
+                isValid = false;
+            } else {
+                nameGroup.classList.remove('error');
+            }
+
+            const ratingInputs = document.querySelectorAll('input[name="rating"]');
+            const ratingGroup = ratingInputs[0].closest('.form-group');
+            const ratingChecked = Array.from(ratingInputs).some(input => input.checked);
+            if (!ratingChecked) {
+                ratingGroup.classList.add('error');
+                isValid = false;
+            } else {
+                ratingGroup.classList.remove('error');
+            }
+
+            const textInput = document.getElementById('review-text');
+            const textGroup = textInput.closest('.form-group');
+            if (!textInput.value.trim() || textInput.value.trim().length < 10) {
+                textGroup.classList.add('error');
+                isValid = false;
+            } else {
+                textGroup.classList.remove('error');
+            }
+
+            return isValid;
+        }
+
+        // Remove error state on input
+        document.querySelectorAll('.form-group input, .form-group textarea').forEach(input => {
+            input.addEventListener('input', () => {
+                input.closest('.form-group').classList.remove('error');
+            });
+        });
+
+        // Form submission
+        reviewForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            if (!validateForm()) {
+                return;
+            }
+
+            const name = document.getElementById('reviewer-name').value.trim();
+            const rating = parseInt(document.querySelector('input[name="rating"]:checked').value);
+            const text = document.getElementById('review-text').value.trim();
+
+            const review = {
+                id: Date.now(),
+                name: name,
+                rating: rating,
+                text: text,
+                date: new Date().toISOString()
+            };
+
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+
+            await new Promise(resolve => setTimeout(resolve, 800));
+
+            try {
+                const reviews = saveReview(review);
+                renderReviews(reviews);
+                clearForm();
+                showMessage('Thank you! Your review has been submitted successfully.', 'success');
+            } catch (error) {
+                console.error('Error saving review:', error);
+                showMessage('An error occurred. Please try again later.', 'error');
+            } finally {
+                submitBtn.classList.remove('loading');
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
