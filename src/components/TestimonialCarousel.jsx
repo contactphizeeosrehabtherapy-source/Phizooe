@@ -34,11 +34,11 @@ export default function TestimonialCarousel() {
   };
 
   return (
-    <section class="section-padding bg-cream" style={{ borderTop: '1px solid var(--color-border)' }}>
-      <div class="container">
-        <div class="section-header text-center">
-          <div class="eyebrow">PATIENT STORIES</div>
-          <h2>What Our Patients <span class="text-orange">Say</span></h2>
+    <section className="section-padding bg-cream" style={{ borderTop: '1px solid var(--color-border)' }}>
+      <div className="container">
+        <div className="section-header text-center">
+          <div className="eyebrow">PATIENT STORIES</div>
+          <h2>What Our Patients <span className="text-orange">Say</span></h2>
           <p>Real stories from patients across Chennai recovering in the comfort of their homes.</p>
         </div>
 
@@ -53,7 +53,7 @@ export default function TestimonialCarousel() {
             >
               {testimonials.map((item, idx) => (
                 <div key={idx} style={{ minWidth: '100%', boxSizing: 'border-box', padding: '0.5rem' }}>
-                  <div class="card" style={{ padding: '2.5rem', textAlign: 'center' }}>
+                  <div className="card" style={{ padding: '2.5rem', textAlign: 'center' }}>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '0.3rem', color: 'var(--color-orange)', marginBottom: '1.25rem' }}>
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} size={20} fill="currentColor" />

@@ -58,7 +58,8 @@ html {
   font-size: 16px;
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: clip;
+  touch-action: pan-y;
 }
 
 body {
@@ -66,20 +67,21 @@ body {
   background-color: var(--color-light-bg);
   color: var(--color-text-light);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   position: relative;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
 }
 
 #root, main, .hero-section, .section-padding, .site-header, .site-footer {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  overflow-x: hidden;
 }
 
 :focus-visible {
@@ -1102,6 +1104,29 @@ img, svg {
   flex-shrink: 0;
 }
 
+/* Contact & About Responsive Grids */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .contact-grid,
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
 /* Contact Form */
 .contact-form-card {
   background-color: var(--color-card-bg);
@@ -1109,6 +1134,12 @@ img, svg {
   border-radius: var(--radius-md);
   padding: 2.5rem;
   box-shadow: var(--shadow-md);
+}
+
+@media (max-width: 640px) {
+  .contact-form-card {
+    padding: 1.5rem 1.25rem;
+  }
 }
 
 .form-group {

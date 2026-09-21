@@ -5,22 +5,22 @@ import AnimatedLogo from './AnimatedLogo';
 
 export default function Footer() {
   return (
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-grid">
-          <div class="footer-brand">
-            <Link to="/" class="brand-logo" aria-label="PhiZeeo Footer Logo">
+    <footer className="site-footer">
+      <div className="container">
+        <div className="footer-grid">
+          <div className="footer-brand">
+            <Link to="/" className="brand-logo" aria-label="PhiZeeo Footer Logo">
               <AnimatedLogo fontSize="1.8rem" />
             </Link>
             <p style={{ marginTop: '1rem', fontSize: '0.925rem', color: 'var(--color-muted-dark)', maxWidth: '340px' }}>
               PhiZeeo is a home physiotherapy and rehabilitation service helping people recover, move better, and live more independently at home.
             </p>
-            <p class="script-tagline" style={{ fontSize: '1.25rem', marginTop: '0.75rem', display: 'block' }}>
+            <p className="script-tagline" style={{ fontSize: '1.25rem', marginTop: '0.75rem', display: 'block' }}>
               "We Treat. God Heals."
             </p>
           </div>
 
-          <div class="footer-col">
+          <div className="footer-col">
             <h4 style={{ fontSize: '1.05rem', marginBottom: '1.25rem', color: 'var(--color-text-dark)' }}>Quick Links</h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <li><Link to="/" style={{ color: 'var(--color-muted-dark)', fontSize: '0.925rem' }}>Home</Link></li>
@@ -30,7 +30,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div class="footer-col">
+          <div className="footer-col">
             <h4 style={{ fontSize: '1.05rem', marginBottom: '1.25rem', color: 'var(--color-text-dark)' }}>Our Services</h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               <li><Link to="/services" style={{ color: 'var(--color-muted-dark)', fontSize: '0.925rem' }}>Home Visit Physio</Link></li>
@@ -40,7 +40,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div class="footer-col">
+          <div className="footer-col">
             <h4 style={{ fontSize: '1.05rem', marginBottom: '1.25rem', color: 'var(--color-text-dark)' }}>Connect With Us</h4>
             <div style={{ display: 'flex', gap: '0.85rem', marginTop: '0.5rem' }}>
               <a 
@@ -74,7 +74,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div class="footer-bottom">
+        <div className="footer-bottom">
           <div>© 2025 PhiZeeo</div>
           <div>Professional rehabilitation. Personal care. At home.</div>
         </div>

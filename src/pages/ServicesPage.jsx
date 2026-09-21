@@ -45,24 +45,24 @@ export default function ServicesPage() {
   return (
     <main>
       {/* Dark Hero */}
-      <section class="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
-        <div class="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div class="eyebrow eyebrow-dark">WHAT WE TREAT</div>
-          <h1>Our <span class="text-orange">Services</span></h1>
-          <p class="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+      <section className="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
+        <div className="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="eyebrow eyebrow-dark">WHAT WE TREAT</div>
+          <h1>Our <span className="text-orange">Services</span></h1>
+          <p className="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
             Professional physiotherapy and rehabilitation delivered at the patient's home. Tailored care designed around your comfort and daily routine.
           </p>
-          <span class="script-tagline">"We Treat. God Heals."</span>
+          <span className="script-tagline">"We Treat. God Heals."</span>
         </div>
       </section>
 
       {/* 3x2 Services Grid */}
-      <section class="section-padding bg-cream">
-        <div class="container">
-          <div class="grid-3">
+      <section className="section-padding bg-cream">
+        <div className="container">
+          <div className="grid-3">
             {servicesList.map((service, idx) => (
-              <div key={idx} class="card">
-                <div class="card-icon">{service.icon}</div>
+              <div key={idx} className="card">
+                <div className="card-icon">{service.icon}</div>
                 <h3>{service.title}</h3>
                 <p>{service.description}</p>
                 <Link 
@@ -78,18 +78,18 @@ export default function ServicesPage() {
       </section>
 
       {/* Dark Banner Replacing Advanced Technology */}
-      <section class="section-padding bg-cream">
-        <div class="container">
-          <div class="cta-banner">
+      <section className="section-padding bg-cream">
+        <div className="container">
+          <div className="cta-banner">
             <div>
-              <h2>Assessment-Led. Drug-Free. <span class="text-orange">At Your Doorstep.</span></h2>
+              <h2>Assessment-Led. Drug-Free. <span className="text-orange">At Your Doorstep.</span></h2>
               <p>Experience specialized, one-on-one physiotherapy designed around your home environment.</p>
             </div>
             <a 
               href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
               target="_blank" 
               rel="noopener noreferrer" 
-              class="btn btn-primary btn-lg"
+              className="btn btn-primary btn-lg"
             >
               Book Appointment
             </a>

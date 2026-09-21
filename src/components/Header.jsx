@@ -15,32 +15,32 @@ export default function Header() {
   };
 
   return (
-    <header class="site-header">
-      <div class="container navbar">
-        <Link to="/" class="brand-logo" onClick={closeMobileMenu} aria-label="PhiZeeo Home Page">
+    <header className="site-header">
+      <div className="container navbar">
+        <Link to="/" className="brand-logo" onClick={closeMobileMenu} aria-label="PhiZeeo Home Page">
           <AnimatedLogo fontSize="1.8rem" />
         </Link>
 
         <nav aria-label="Main Navigation">
-          <ul class="nav-links">
-            <li><NavLink to="/" class={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink></li>
-            <li><NavLink to="/about" class={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About</NavLink></li>
-            <li><NavLink to="/services" class={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink></li>
-            <li><NavLink to="/contact" class={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact</NavLink></li>
+          <ul className="nav-links">
+            <li><NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink></li>
+            <li><NavLink to="/about" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>About</NavLink></li>
+            <li><NavLink to="/services" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Services</NavLink></li>
+            <li><NavLink to="/contact" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Contact</NavLink></li>
           </ul>
         </nav>
 
-        <div class="nav-actions">
+        <div className="nav-actions">
           <a 
             href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
             target="_blank" 
             rel="noopener noreferrer" 
-            class="btn btn-primary btn-sm"
+            className="btn btn-primary btn-sm"
           >
             Book Appointment
           </a>
           <button 
-            class="hamburger-btn" 
+            className="hamburger-btn" 
             onClick={toggleMobileMenu} 
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
@@ -51,8 +51,8 @@ export default function Header() {
       </div>
 
       {/* Mobile Drawer Menu */}
-      <div class={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
-        <ul class="mobile-nav-links">
+      <div className={`mobile-nav ${mobileMenuOpen ? 'open' : ''}`}>
+        <ul className="mobile-nav-links">
           <li><NavLink to="/" onClick={closeMobileMenu}>Home</NavLink></li>
           <li><NavLink to="/about" onClick={closeMobileMenu}>About Us</NavLink></li>
           <li><NavLink to="/services" onClick={closeMobileMenu}>Services</NavLink></li>
@@ -62,7 +62,7 @@ export default function Header() {
           href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
           target="_blank" 
           rel="noopener noreferrer" 
-          class="btn btn-primary"
+          className="btn btn-primary"
           style={{ width: '100%', marginTop: '1rem' }}
           onClick={closeMobileMenu}
         >

@@ -7,21 +7,21 @@ export default function AboutPage({ onSelectDoctor }) {
   return (
     <main>
       {/* Dark Hero */}
-      <section class="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
-        <div class="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div class="eyebrow eyebrow-dark">ABOUT US</div>
-          <h1>Healing Comfortably, <span class="text-orange">Right at Home</span></h1>
-          <p class="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+      <section className="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
+        <div className="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="eyebrow eyebrow-dark">ABOUT US</div>
+          <h1>Healing Comfortably, <span className="text-orange">Right at Home</span></h1>
+          <p className="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
             PhiZeeo is a home physiotherapy and rehabilitation service helping people recover, move better, and live more independently at home.
           </p>
-          <span class="script-tagline" style={{ marginTop: '0.5rem' }}>"We Treat. God Heals."</span>
+          <span className="script-tagline" style={{ marginTop: '0.5rem' }}>"We Treat. God Heals."</span>
         </div>
       </section>
 
       {/* Our Story */}
-      <section class="section-padding bg-cream">
-        <div class="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1.1fr', gap: '3.5rem', alignItems: 'center' }}>
-          <div class="media-frame" style={{ aspectRatio: '4/3' }}>
+      <section className="section-padding bg-cream">
+        <div className="container about-grid">
+          <div className="media-frame" style={{ aspectRatio: '4/3' }}>
             <svg width="100%" height="100%" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ background: '#EAE6DF' }}>
               <rect width="600" height="450" fill="#EAE6DF"/>
               <circle cx="300" cy="200" r="75" fill="#F28C1B" fillOpacity="0.15"/>
@@ -33,8 +33,8 @@ export default function AboutPage({ onSelectDoctor }) {
           </div>
 
           <div>
-            <div class="eyebrow">WHO WE ARE</div>
-            <h2>Professional Rehabilitation. <span class="text-orange">Personal Touch.</span></h2>
+            <div className="eyebrow">WHO WE ARE</div>
+            <h2>Professional Rehabilitation. <span className="text-orange">Personal Touch.</span></h2>
             <p>
               PhiZeeo is one of Chennai's 5-star rated home physio services, founded on the mission of delivering professional, personalized physio through expert home visits.
             </p>
@@ -44,7 +44,7 @@ export default function AboutPage({ onSelectDoctor }) {
             <div style={{ marginTop: '1.5rem' }}>
               <a 
                 href="#specialists" 
-                class="btn btn-outline-dark"
+                className="btn btn-outline-dark"
                 onClick={(e) => {
                   e.preventDefault();
                   document.getElementById('specialists')?.scrollIntoView({ behavior: 'smooth' });
@@ -61,32 +61,32 @@ export default function AboutPage({ onSelectDoctor }) {
       <WhoWeServe />
 
       {/* Our Values */}
-      <section class="section-padding bg-cream" style={{ borderTop: '1px solid var(--color-border)' }}>
-        <div class="container">
-          <div class="section-header text-center">
-            <div class="eyebrow">CORE PRINCIPLES</div>
-            <h2>Our <span class="text-orange">Values</span></h2>
+      <section className="section-padding bg-cream" style={{ borderTop: '1px solid var(--color-border)' }}>
+        <div className="container">
+          <div className="section-header text-center">
+            <div className="eyebrow">CORE PRINCIPLES</div>
+            <h2>Our <span className="text-orange">Values</span></h2>
             <p>The foundations that guide every treatment and interaction with our patients.</p>
           </div>
 
-          <div class="grid-4">
-            <div class="card">
-              <div class="card-icon"><Heart size={28} /></div>
+          <div className="grid-4">
+            <div className="card">
+              <div className="card-icon"><Heart size={28} /></div>
               <h3>Care</h3>
               <p>Dedicated personal attention for every patient's unique recovery journey.</p>
             </div>
-            <div class="card">
-              <div class="card-icon"><Activity size={28} /></div>
+            <div className="card">
+              <div className="card-icon"><Activity size={28} /></div>
               <h3>Expertise</h3>
               <p>Evidence-based physio techniques continuously refined since 2017.</p>
             </div>
-            <div class="card">
-              <div class="card-icon"><Shield size={28} /></div>
+            <div className="card">
+              <div className="card-icon"><Shield size={28} /></div>
               <h3>Trust</h3>
               <p>Transparent, compassionate therapy delivered safely inside your home.</p>
             </div>
-            <div class="card">
-              <div class="card-icon"><Sparkles size={28} /></div>
+            <div className="card">
+              <div className="card-icon"><Sparkles size={28} /></div>
               <h3>Recovery</h3>
               <p>Long-term mobility without relying on medication or invasive surgeries.</p>
             </div>
@@ -95,8 +95,8 @@ export default function AboutPage({ onSelectDoctor }) {
       </section>
 
       {/* Dark Quote Banner */}
-      <section class="section-padding bg-cream">
-        <div class="container">
+      <section className="section-padding bg-cream">
+        <div className="container">
           <div style={{ backgroundColor: 'var(--color-dark-card)', borderRadius: 'var(--radius-lg)', padding: '4.5rem 2.5rem', textAlign: 'center', border: '1px solid var(--color-dark-border)' }}>
             <blockquote style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(1.75rem, 4vw, 2.75rem)', fontWeight: '700', color: '#FFFFFF', maxWidth: '800px', margin: '0 auto 1.5rem auto', lineHeight: '1.3' }}>
               "Comfort at home speeds up healing."

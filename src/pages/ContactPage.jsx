@@ -60,25 +60,25 @@ export default function ContactPage() {
   return (
     <main>
       {/* Dark Hero */}
-      <section class="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
-        <div class="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
-          <div class="eyebrow eyebrow-dark">GET IN TOUCH</div>
-          <h1>Get in <span class="text-orange">Touch</span></h1>
-          <p class="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+      <section className="hero-section bg-dark" style={{ paddingBottom: '4rem' }}>
+        <div className="container text-center" style={{ maxWidth: '800px', margin: '0 auto' }}>
+          <div className="eyebrow eyebrow-dark">GET IN TOUCH</div>
+          <h1>Get in <span className="text-orange">Touch</span></h1>
+          <p className="subtext" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
             Have questions or ready to schedule your home visit? Reach out directly or complete the appointment form below.
           </p>
-          <span class="script-tagline">"We Treat. God Heals."</span>
+          <span className="script-tagline">"We Treat. God Heals."</span>
         </div>
       </section>
 
       {/* Contact Grid */}
-      <section class="section-padding bg-cream">
-        <div class="container">
-          <div style={{ display: 'grid', gridTemplateColumns: '0.9fr 1.1fr', gap: '3rem' }}>
+      <section className="section-padding bg-cream">
+        <div className="container">
+          <div className="contact-grid">
 
             {/* Left Column: Info Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-              <div class="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
+              <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-orange-light)', color: 'var(--color-orange-text-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <MapPin size={24} />
                 </div>
@@ -89,7 +89,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div class="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
+              <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-orange-light)', color: 'var(--color-orange-text-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <PhoneCall size={24} />
                 </div>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div class="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
+              <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-orange-light)', color: 'var(--color-orange-text-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Mail size={24} />
                 </div>
@@ -110,7 +110,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div class="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
+              <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-orange-light)', color: 'var(--color-orange-text-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Clock size={24} />
                 </div>
@@ -120,7 +120,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div class="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem', backgroundColor: 'var(--color-light-bg)' }}>
+              <div className="card" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1.25rem', backgroundColor: 'var(--color-light-bg)' }}>
                 <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'var(--color-orange-light)', color: 'var(--color-orange-text-cream)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                   <Globe size={24} />
                 </div>
@@ -135,17 +135,17 @@ export default function ContactPage() {
             </div>
 
             {/* Right Column: Booking Form */}
-            <div class="contact-form-card">
+            <div className="contact-form-card">
               <h3 style={{ fontSize: '1.6rem', marginBottom: '0.5rem' }}>Book Appointment</h3>
               <p style={{ color: 'var(--color-muted-light)', marginBottom: '1.75rem' }}>Fill in your details below and we will automatically prepare your request via WhatsApp.</p>
 
-              <form onSubmit={handleSubmit} novalidate>
-                <div class="form-group">
+              <form onSubmit={handleSubmit} noValidate>
+                <div className="form-group">
                   <label htmlFor="fullName">Full Name *</label>
                   <input 
                     type="text" 
                     id="fullName" 
-                    class="form-control" 
+                    className="form-control" 
                     placeholder="e.g. Anitha Sundaram" 
                     value={formData.fullName} 
                     onChange={handleChange} 
@@ -153,12 +153,12 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label htmlFor="phoneNumber">Phone Number *</label>
                   <input 
                     type="tel" 
                     id="phoneNumber" 
-                    class="form-control" 
+                    className="form-control" 
                     placeholder="e.g. 9876543210" 
                     value={formData.phoneNumber} 
                     onChange={handleChange} 
@@ -166,11 +166,11 @@ export default function ContactPage() {
                   />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label htmlFor="serviceSelect">Service Required *</label>
                   <select 
                     id="serviceSelect" 
-                    class="form-control" 
+                    className="form-control" 
                     value={formData.serviceSelect} 
                     onChange={handleChange} 
                     required
@@ -185,30 +185,30 @@ export default function ContactPage() {
                   </select>
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label htmlFor="preferredDate">Preferred Date *</label>
                   <input 
                     type="date" 
                     id="preferredDate" 
-                    class="form-control" 
+                    className="form-control" 
                     value={formData.preferredDate} 
                     onChange={handleChange} 
                     required 
                   />
                 </div>
 
-                <div class="form-group">
+                <div className="form-group">
                   <label htmlFor="userMessage">Message / Notes (Optional)</label>
                   <textarea 
                     id="userMessage" 
-                    class="form-control" 
+                    className="form-control" 
                     placeholder="Briefly describe your symptoms or specific requirements..." 
                     value={formData.userMessage} 
                     onChange={handleChange}
                   />
                 </div>
 
-                <button type="submit" class="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>
+                <button type="submit" className="btn btn-primary" style={{ width: '100%', marginTop: '0.5rem' }}>
                   <MessageCircle size={20} />
                   Send Request via WhatsApp
                 </button>

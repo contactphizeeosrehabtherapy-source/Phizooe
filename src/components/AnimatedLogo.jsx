@@ -184,28 +184,28 @@ export default function AnimatedLogo({ fontSize }) {
   return (
     <div 
       ref={logoRef} 
-      class="phizeeo-logo-wm" 
+      className="phizeeo-logo-wm" 
       role="img" 
       aria-label="PhiZeeo!" 
       title="Click to replay logo animation"
       onClick={buildAnimation}
       style={fontSize ? { fontSize } : {}}
     >
-      <span class="glow"></span>
-      <span class="ground"></span>
-      <span class="ch o" aria-hidden="true">P</span>
-      <span class="ch o" aria-hidden="true">h</span>
-      <span class="ch o" aria-hidden="true">i</span>
-      <span class="ch w" aria-hidden="true">Z</span>
-      <span class="ch w" aria-hidden="true">e</span>
-      <span class="ch w" aria-hidden="true">e</span>
-      <span class="ch w" aria-hidden="true">o</span>
-      <span class="bang" aria-hidden="true">
-        <span class="stem"></span>
-        <span class="dot"></span>
+      <span className="glow"></span>
+      <span className="ground"></span>
+      <span className="ch o" aria-hidden="true">P</span>
+      <span className="ch o" aria-hidden="true">h</span>
+      <span className="ch o" aria-hidden="true">i</span>
+      <span className="ch w" aria-hidden="true">Z</span>
+      <span className="ch w" aria-hidden="true">e</span>
+      <span className="ch w" aria-hidden="true">e</span>
+      <span className="ch w" aria-hidden="true">o</span>
+      <span className="bang" aria-hidden="true">
+        <span className="stem"></span>
+        <span className="dot"></span>
       </span>
-      <span class="ring"></span>
-      <span class="ball"></span>
+      <span className="ring"></span>
+      <span className="ball"></span>
     </div>
   );
 }

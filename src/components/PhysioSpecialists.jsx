@@ -2,16 +2,16 @@ import React from 'react';
 
 export default function PhysioSpecialists({ onSelectDoctor }) {
   return (
-    <section class="physio-specialists-section">
-      <div class="container">
-        <div class="section-header text-center" style={{ marginBottom: '3.5rem' }}>
+    <section className="physio-specialists-section">
+      <div className="container">
+        <div className="section-header text-center" style={{ marginBottom: '3.5rem' }}>
           <h2 style={{ color: 'var(--color-orange)', fontSize: 'clamp(2rem, 4vw, 2.75rem)' }}>Our Physio Specialists</h2>
         </div>
 
-        <div class="specialists-grid">
+        <div className="specialists-grid">
           {/* Specialist 1 */}
-          <div class="specialist-card">
-            <div class="specialist-avatar-wrap">
+          <div className="specialist-card">
+            <div className="specialist-avatar-wrap">
               <img 
                 src="https://www.phizeeo.com/zeedr.png" 
                 alt="Dr. Zeenith VR (PT)" 
@@ -21,14 +21,14 @@ export default function PhysioSpecialists({ onSelectDoctor }) {
                 }}
               />
             </div>
-            <h3 class="specialist-name">Dr. Zeenith VR (PT)</h3>
-            <p class="specialist-title">Rehabilitation Specialist</p>
-            <button class="specialist-btn" onClick={() => onSelectDoctor('zee')}>View Details</button>
+            <h3 className="specialist-name">Dr. Zeenith VR (PT)</h3>
+            <p className="specialist-title">Rehabilitation Specialist</p>
+            <button className="specialist-btn" onClick={() => onSelectDoctor('zee')}>View Details</button>
           </div>
 
           {/* Specialist 2 */}
-          <div class="specialist-card">
-            <div class="specialist-avatar-wrap">
+          <div className="specialist-card">
+            <div className="specialist-avatar-wrap">
               <img 
                 src="https://www.phizeeo.com/jdr.jpg" 
                 alt="Dr. Ramya Josephine (PT)" 
@@ -38,9 +38,9 @@ export default function PhysioSpecialists({ onSelectDoctor }) {
                 }}
               />
             </div>
-            <h3 class="specialist-name">Dr. Ramya Josephine (PT)</h3>
-            <p class="specialist-title">Women's Health Physio</p>
-            <button class="specialist-btn" onClick={() => onSelectDoctor('ramya')}>View Details</button>
+            <h3 className="specialist-name">Dr. Ramya Josephine (PT)</h3>
+            <p className="specialist-title">Women's Health Physio</p>
+            <button className="specialist-btn" onClick={() => onSelectDoctor('ramya')}>View Details</button>
           </div>
         </div>
       </div>

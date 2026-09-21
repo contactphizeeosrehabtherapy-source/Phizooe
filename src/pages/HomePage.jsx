@@ -15,13 +15,21 @@ export default function HomePage({ onSelectDoctor }) {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.02, rootMargin: '0px 0px -20px 0px' }
     );
 
     const elements = document.querySelectorAll('.reveal-on-scroll');
     elements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    // Fallback: reveal all elements so mobile scrolling is never delayed
+    const timer = setTimeout(() => {
+      elements.forEach((el) => el.classList.add('in-view'));
+    }, 1200);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(timer);
+    };
   }, []);
 
   return (
