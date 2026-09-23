@@ -4,8 +4,23 @@ import { Star, Shield, CheckCircle2, Home, Activity, Brain, Zap, Users, HeartPul
 import PhysioSpecialists from '../components/PhysioSpecialists';
 import WhoWeServe from '../components/WhoWeServe';
 import TestimonialCarousel from '../components/TestimonialCarousel';
+import { useSiteContent } from '../context/SiteContentContext';
+
+const ICON_MAP = {
+  Home: Home,
+  Activity: Activity,
+  Brain: Brain,
+  Zap: Zap,
+  Users: Users,
+  HeartPulse: HeartPulse
+};
 
 export default function HomePage({ onSelectDoctor }) {
+  const { siteContent } = useSiteContent();
+  const { hero, contact, services } = siteContent;
+
+  const whatsappUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`;
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -21,7 +36,6 @@ export default function HomePage({ onSelectDoctor }) {
     const elements = document.querySelectorAll('.reveal-on-scroll');
     elements.forEach((el) => observer.observe(el));
 
-    // Fallback: reveal all elements so mobile scrolling is never delayed
     const timer = setTimeout(() => {
       elements.forEach((el) => el.classList.add('in-view'));
     }, 1200);
@@ -38,15 +52,15 @@ export default function HomePage({ onSelectDoctor }) {
       <section className="hero-section bg-dark">
         <div className="container hero-grid">
           <div className="hero-content">
-            <div className="eyebrow eyebrow-dark">HOME PHYSIOTHERAPY IN CHENNAI</div>
-            <h1>Heal Comfortably at <span className="text-orange">Home</span></h1>
-            <p className="subtext">
-              PhiZeeo is a home physiotherapy and rehabilitation service helping people recover, move better, and live more independently at home.
-            </p>
+            <div className="eyebrow eyebrow-dark">{hero.eyebrow}</div>
+            <h1>
+              {hero.titlePrefix} <span className="text-orange">{hero.titleHighlight}</span> {hero.titleSuffix}
+            </h1>
+            <p className="subtext">{hero.subtext}</p>
 
             <div className="hero-cta-group">
               <a 
-                href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
+                href={whatsappUrl} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn btn-primary btn-lg"
@@ -58,38 +72,37 @@ export default function HomePage({ onSelectDoctor }) {
             </div>
 
             <div style={{ marginBottom: '2.5rem' }}>
-              <span className="script-tagline">"We Treat. God Heals."</span>
+              <span className="script-tagline">{hero.tagline}</span>
             </div>
 
             <div className="trust-badges">
               <div className="trust-item">
                 <Star size={18} />
-                <span>5-Star Rated on Google</span>
+                <span>{hero.googleRatingText}</span>
               </div>
               <div className="trust-item">
                 <Shield size={18} />
-                <span>Home Practice Since 2017</span>
+                <span>{hero.trustBadge2}</span>
               </div>
               <div className="trust-item">
                 <CheckCircle2 size={18} />
-                <span>Personalized Plans</span>
+                <span>{hero.trustBadge3}</span>
               </div>
             </div>
           </div>
 
           {/* Hero Media Section */}
           <div className="hero-media">
-            <div className="media-frame">
-              <svg width="100%" height="100%" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ background: '#141618' }}>
-                <rect width="600" height="450" fill="#141618"/>
-                <circle cx="300" cy="180" r="90" fill="#F28C1B" fillOpacity="0.12"/>
-                <path d="M250 200C250 160 270 140 300 140C330 140 350 160 350 200" stroke="#F28C1B" strokeWidth="4" strokeLinecap="round"/>
-                <circle cx="300" cy="120" r="30" stroke="#F28C1B" strokeWidth="4"/>
-                <path d="M200 320L270 240L330 270L400 210" stroke="#F28C1B" strokeDasharray="8 8" strokeWidth="3"/>
-                <rect x="180" y="320" width="240" height="60" rx="12" fill="#1E2024" stroke="#2C2F36" strokeWidth="2"/>
-                <text x="300" y="355" fill="#FFFFFF" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="16" fontWeight="700" textAnchor="middle">[Photo Placeholder: Home Physio Session]</text>
-                <text x="300" y="375" fill="#A3A3A3" fontFamily="Inter, sans-serif" fontSize="12" textAnchor="middle">Personalized assessment & treatment delivered in your living room</text>
-              </svg>
+            <div className="media-frame" style={{ aspectRatio: '4/3', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+              <img 
+                src={hero.image} 
+                alt="Personalized Home Physiotherapy Session in Chennai" 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = '/hero_physio_home.png';
+                }}
+              />
             </div>
             <div className="floating-badge">
               <div className="badge-icon">
@@ -104,7 +117,7 @@ export default function HomePage({ onSelectDoctor }) {
         </div>
       </section>
 
-      {/* 2. Intro Strip & 3x2 Mini Services Grid */}
+      {/* 2. Intro Strip & Services Grid */}
       <section className="section-padding bg-cream reveal-on-scroll">
         <div className="container intro-grid">
           <div>
@@ -119,36 +132,16 @@ export default function HomePage({ onSelectDoctor }) {
           </div>
 
           <div className="intro-cards-grid">
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <Home size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Home Visit Physio</h4>
-              <p style={{ fontSize: '0.85rem' }}>Professional treatment delivered at your home</p>
-            </div>
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <Activity size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Orthopedic Rehab</h4>
-              <p style={{ fontSize: '0.85rem' }}>Pain relief and mobility recovery for joints & spine</p>
-            </div>
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <Brain size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Neuro Rehabilitation</h4>
-              <p style={{ fontSize: '0.85rem' }}>Stroke, paralysis and neurological recovery programs</p>
-            </div>
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <Zap size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Sports Injury Rehab</h4>
-              <p style={{ fontSize: '0.85rem' }}>Injury recovery and performance training for athletes</p>
-            </div>
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <Users size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Pediatric & Geriatric</h4>
-              <p style={{ fontSize: '0.85rem' }}>Specialized care for children and elderly patients</p>
-            </div>
-            <div className="card" style={{ padding: '1.5rem' }}>
-              <HeartPulse size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
-              <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>Cardiopulmonary</h4>
-              <p style={{ fontSize: '0.85rem' }}>Recovery support for heart and lung conditions</p>
-            </div>
+            {services.map((serv) => {
+              const IconComponent = ICON_MAP[serv.iconName] || Activity;
+              return (
+                <div key={serv.id} className="card" style={{ padding: '1.5rem' }}>
+                  <IconComponent size={28} style={{ color: 'var(--color-orange)', marginBottom: '0.85rem' }} />
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.4rem' }}>{serv.title}</h4>
+                  <p style={{ fontSize: '0.85rem' }}>{serv.description}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -197,7 +190,7 @@ export default function HomePage({ onSelectDoctor }) {
 
           <div style={{ textAlign: 'center' }}>
             <a 
-              href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
+              href={whatsappUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="btn btn-primary btn-lg"
@@ -256,7 +249,7 @@ export default function HomePage({ onSelectDoctor }) {
               <p>Message us on WhatsApp to book your personalized home visit in Chennai.</p>
             </div>
             <a 
-              href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
+              href={whatsappUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="btn btn-primary btn-lg"
@@ -269,4 +262,3 @@ export default function HomePage({ onSelectDoctor }) {
     </main>
   );
 }
-

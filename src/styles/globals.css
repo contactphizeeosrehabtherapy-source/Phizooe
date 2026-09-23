@@ -1600,3 +1600,600 @@ button, a, input, select, textarea {
 }
 
 
+
+
+/* ==========================================================================
+   ADMIN PORTAL & LIVE WEBSITE EDITOR STYLES
+   ========================================================================== */
+
+/* 1. Security Lock Screen */
+.admin-lock-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top center, #1E1E1E 0%, #0B0B0B 100%);
+  padding: 1.5rem;
+}
+
+.admin-lock-card {
+  width: 100%;
+  max-width: 440px;
+  background-color: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid #282828;
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 2rem;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lock-icon-badge {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: rgba(242, 140, 27, 0.12);
+  border: 1px solid rgba(242, 140, 27, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.admin-lock-card h2 {
+  font-size: 1.6rem;
+  color: #FFFFFF;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-heading);
+}
+
+.admin-lock-sub {
+  font-size: 0.875rem;
+  color: var(--color-muted-dark);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.admin-error-alert {
+  background-color: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #FCA5A5;
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 2. Admin Main Dashboard Layout */
+.admin-dashboard-layout {
+  min-height: 100vh;
+  background-color: #0B0B0B;
+  color: #F5F5F5;
+  font-family: var(--font-body);
+}
+
+.admin-topbar {
+  background-color: #121212;
+  border-bottom: 1px solid #242424;
+  padding: 0.85rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.admin-badge {
+  background-color: rgba(242, 140, 27, 0.18);
+  color: var(--color-orange);
+  border: 1px solid rgba(242, 140, 27, 0.35);
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.admin-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* 3. Metrics Cards Bar */
+.admin-metrics-container {
+  background-color: #141414;
+  border-bottom: 1px solid #222222;
+  padding: 1.25rem 0;
+}
+
+.admin-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background-color: #1A1A1A;
+  border: 1px solid #2A2A2A;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.metric-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metric-val {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: #FFFFFF;
+  line-height: 1;
+}
+
+.metric-lbl {
+  font-size: 0.8rem;
+  color: var(--color-muted-dark);
+  margin-top: 0.2rem;
+}
+
+/* 4. Sidebar & Body */
+.admin-main-body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+}
+
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.admin-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background-color: #141414;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.admin-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  color: #A3A3A3;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 150ms ease;
+  width: 100%;
+}
+
+.admin-nav-item:hover {
+  background-color: #1F1F1F;
+  color: #FFFFFF;
+}
+
+.admin-nav-item.active {
+  background-color: var(--color-orange);
+  color: #0B0B0B;
+  font-weight: 700;
+}
+
+.count-pill {
+  margin-left: auto;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: inherit;
+}
+
+.count-pill.highlight {
+  background-color: #EF4444;
+  color: #FFFFFF;
+}
+
+/* 5. Cards & Section Panels */
+.admin-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.admin-section-header h2 {
+  font-size: 1.5rem;
+  color: #FFFFFF;
+  margin-bottom: 0.25rem;
+  font-family: var(--font-heading);
+}
+
+.admin-section-header p {
+  font-size: 0.875rem;
+  color: var(--color-muted-dark);
+}
+
+.admin-card {
+  background-color: #141414;
+  border: 1px solid #242424;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+/* 6. Drag & Drop Picture Upload Dropzone */
+.picture-upload-dropzone {
+  border: 2px dashed rgba(242, 140, 27, 0.4);
+  background-color: rgba(242, 140, 27, 0.04);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 200ms ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.picture-upload-dropzone:hover,
+.picture-upload-dropzone.drag-over {
+  border-color: var(--color-orange);
+  background-color: rgba(242, 140, 27, 0.08);
+}
+
+.pictures-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.picture-card-item {
+  background-color: #1A1A1A;
+  border: 1px solid #2A2A2A;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.picture-card-item.is-hero-active {
+  border-color: var(--color-orange);
+  box-shadow: 0 0 0 1px var(--color-orange);
+}
+
+.picture-thumb-wrap {
+  width: 100%;
+  aspect-ratio: 4/3;
+  position: relative;
+  overflow: hidden;
+  background-color: #0F0F0F;
+}
+
+.picture-thumb-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-active-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: var(--color-orange);
+  color: #0B0B0B;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.category-pill-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  color: #E5E5E5;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.picture-card-body {
+  padding: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.picture-card-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.picture-card-actions {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* 7. Form Grids & Controls */
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.form-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.admin-card .form-control {
+  background-color: #1A1A1A;
+  border: 1px solid #2E2E2E;
+  color: #FFFFFF;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.admin-card .form-control:focus {
+  border-color: var(--color-orange);
+  outline: none;
+}
+
+.admin-card label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #A3A3A3;
+  margin-bottom: 0.35rem;
+}
+
+/* 8. Doctor & Service Admin Grids */
+.doctors-admin-grid,
+.services-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+}
+
+.badge-chip {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #D4D4D4;
+  font-size: 0.725rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+.testimonials-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.testimonial-initials-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: rgba(242, 140, 27, 0.15);
+  color: var(--color-orange);
+  font-weight: 800;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 9. Appointments Leads Table */
+.appointments-table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: #1A1A1A;
+  color: #A3A3A3;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #282828;
+}
+
+.admin-table td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #222222;
+  font-size: 0.875rem;
+  color: #E5E5E5;
+}
+
+.status-select-pill {
+  background-color: #1A1A1A;
+  border: 1px solid #2E2E2E;
+  color: #FFFFFF;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-select-pill.pending {
+  color: #F59E0B;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.status-select-pill.contacted {
+  color: #3B82F6;
+  border-color: rgba(59, 130, 246, 0.4);
+}
+
+.status-select-pill.completed {
+  color: #10B981;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+/* 10. Modals & Toast */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.admin-modal-card {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background-color: #141414;
+  border: 1px solid #2A2A2A;
+  border-radius: 16px;
+  padding: 1.75rem;
+}
+
+.admin-toast-popup {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #18181B;
+  border: 1px solid #27272A;
+  color: #FFFFFF;
+  padding: 0.85rem 1.25rem;
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  z-index: 2000;
+  animation: slideInRight 250ms ease;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.btn-xs {
+  padding: 0.35rem 0.65rem;
+  font-size: 0.775rem;
+  border-radius: 6px;
+}
+
+.btn-outline-danger {
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #EF4444;
+  background: transparent;
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+}
+
+.btn-danger {
+  background-color: #DC2626;
+  color: #FFFFFF;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #B91C1C;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: #A3A3A3;
+  cursor: pointer;
+}
+
+.btn-icon:hover {
+  color: #FFFFFF;
+}
+
+/* Admin Responsive Mobile Styles */
+@media (max-width: 900px) {
+  .admin-main-body {
+    grid-template-columns: 1fr;
+  }
+  
+  .admin-topbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .admin-sidebar {
+    position: sticky;
+    top: 60px;
+    z-index: 90;
+  }
+
+  .admin-nav-menu {
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+  }
+
+  .admin-nav-item {
+    scroll-snap-align: start;
+    width: auto;
+  }
+}
+

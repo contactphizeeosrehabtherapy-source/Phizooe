@@ -1,47 +1,16 @@
 import React from 'react';
-import { X, Award, MapPin, CheckCircle2, MessageCircle, Star, ShieldCheck } from 'lucide-react';
-
-const doctorsData = {
-  zee: {
-    name: "Dr. Zeenith VR (PT)",
-    role: "Chief Rehabilitation Specialist",
-    credentials: "B.P.T, M.P.T (Neuro Rehab)",
-    experience: "8+ Years Exp.",
-    rating: "5.0 ★ (120+ Patients)",
-    location: "Chennai Home Visits",
-    img: "https://www.phizeeo.com/zeedr.png",
-    bio: "Dr. Zeenith VR has practiced home-visit physiotherapy in Chennai since 2017. He specializes in comprehensive physical evaluation, orthopedic rehabilitation, neurological recovery (including post-stroke and paralysis therapy), and acute & chronic pain management.",
-    specialties: [
-      "Orthopedic & Joint Pain Rehab",
-      "Stroke & Neurological Recovery",
-      "Post-Surgical Care at Home",
-      "Acute & Chronic Spine Therapy"
-    ],
-    whatsappMsg: "Hi Dr. Zeenith VR, I'd like to book a home physio consultation."
-  },
-  ramya: {
-    name: "Dr. Ramya Josephine (PT)",
-    role: "Women's Health & Geriatric Specialist",
-    credentials: "B.P.T, Women's Health Specialist",
-    experience: "7+ Years Exp.",
-    rating: "5.0 ★ (95+ Patients)",
-    location: "Chennai Home Visits",
-    img: "https://www.phizeeo.com/jdr.jpg",
-    bio: "Dr. Ramya Josephine specializes in post-surgery physical rehabilitation, geriatric care, stroke recovery therapy, and dedicated women's health physiotherapy. She delivers gentle, expert home visits designed for long-term mobility and wellness.",
-    specialties: [
-      "Women's Health & Postnatal Care",
-      "Geriatric Balance & Fall Prevention",
-      "Post-Op Knee & Hip Rehabilitation",
-      "Gentle Stroke & Mobility Therapy"
-    ],
-    whatsappMsg: "Hi Dr. Ramya Josephine, I'd like to book a home physio consultation."
-  }
-};
+import { X, MapPin, CheckCircle2, MessageCircle, Star } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function DoctorModal({ doctorId, onClose }) {
+  const { siteContent } = useSiteContent();
   if (!doctorId) return null;
-  const doc = doctorsData[doctorId];
+
+  const doc = siteContent.doctors.find(d => d.id === doctorId);
   if (!doc) return null;
+
+  const whatsappNumber = siteContent.contact.whatsappNumber || '919360447385';
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(doc.whatsappMsg || `Hi ${doc.name}, I'd like to book a home physio consultation.`)}`;
 
   return (
     <div className="modal-overlay active" role="dialog" aria-modal="true" onClick={onClose}>
@@ -92,7 +61,7 @@ export default function DoctorModal({ doctorId, onClose }) {
           <div className="doc-section">
             <h4 className="doc-section-title">Key Areas of Expertise</h4>
             <div className="doc-specialties-grid">
-              {doc.specialties.map((spec, i) => (
+              {doc.specialties && doc.specialties.map((spec, i) => (
                 <div key={i} className="doc-specialty-item">
                   <CheckCircle2 size={16} className="spec-icon" />
                   <span>{spec}</span>
@@ -101,31 +70,20 @@ export default function DoctorModal({ doctorId, onClose }) {
             </div>
           </div>
 
-          {/* Guarantee banner */}
-          <div className="doc-guarantee-box">
-            <ShieldCheck size={20} className="guarantee-icon" />
-            <div>
-              <strong>1-on-1 Personalized Doorstep Care</strong>
-              <p>Thorough physical evaluation with clinical equipment brought directly to your home.</p>
-            </div>
-          </div>
-
-          {/* CTA Action */}
-          <div className="doctor-modal-cta">
+          {/* CTA Footer inside modal */}
+          <div className="doctor-modal-footer">
             <a 
-              href={`https://wa.me/919360447385?text=${encodeURIComponent(doc.whatsappMsg)}`} 
+              href={whatsappUrl}
               target="_blank" 
               rel="noopener noreferrer" 
-              className="btn btn-primary btn-lg btn-block doctor-cta-btn" 
+              className="btn btn-primary doc-whatsapp-btn"
             >
-              <MessageCircle size={20} />
-              Book Home Appointment with Specialist
+              <MessageCircle size={18} />
+              Book Home Visit with {doc.name.split(' ')[1] || 'Doctor'}
             </a>
-            <span className="doctor-cta-subtext">⚡ Fast Confirmation via Direct WhatsApp</span>
           </div>
         </div>
       </div>
     </div>
   );
 }
-

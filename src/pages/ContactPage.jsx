@@ -2,9 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { MapPin, PhoneCall, Mail, Clock, Globe, MessageCircle } from 'lucide-react';
 import { saveAppointmentRequest } from '../lib/supabase';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function ContactPage() {
+  const { siteContent, addManualAppointment } = useSiteContent();
+  const { contact } = siteContent;
   const location = useLocation();
+
   const [formData, setFormData] = useState({
     fullName: '',
     phoneNumber: '',
@@ -38,6 +42,15 @@ export default function ContactPage() {
 
     setFormStatus({ message: 'Saving request & opening WhatsApp...', type: 'success' });
 
+    // Store in Local Context for Admin Panel Lead Tracking
+    addManualAppointment({
+      fullName,
+      phone: phoneNumber,
+      service: serviceSelect,
+      preferredDate,
+      notes: userMessage
+    });
+
     // Store in Supabase database
     await saveAppointmentRequest(formData);
 
@@ -50,7 +63,7 @@ export default function ContactPage() {
       (userMessage ? `\n*Notes/Message:* ${userMessage}` : '');
 
     const encodedText = encodeURIComponent(formattedMessage);
-    const whatsappUrl = `https://wa.me/919360447385?text=${encodedText}`;
+    const whatsappUrl = `https://wa.me/${contact.whatsappNumber || '919360447385'}?text=${encodedText}`;
 
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
@@ -83,9 +96,8 @@ export default function ContactPage() {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.25rem' }}>Visit Us / Service Area</h4>
-                  <p style={{ color: 'var(--color-muted-light)', fontSize: '0.95rem' }}>Home Visit Physiotherapy Services across Chennai, Tamil Nadu</p>
-                  <span style={{ display: 'inline-block', backgroundColor: '#ECE7E0', color: '#6B655C', fontSize: '0.785rem', fontWeight: '600', padding: '0.15rem 0.5rem', borderRadius: '4px' }}>[Add later]</span>
+                  <h4 style={{ fontSize: '1.05rem', marginBottom: '0.25rem' }}>Service Area</h4>
+                  <p style={{ color: 'var(--color-muted-light)', fontSize: '0.95rem' }}>{contact.address}</p>
                 </div>
               </div>
 
@@ -95,7 +107,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 style={{ fontSize: '1.05rem', marginBottom: '0.25rem' }}>Call Us</h4>
-                  <p><a href="tel:+919360447385" style={{ fontWeight: '700', color: 'var(--color-orange-text-cream)' }}>+91 9360447385</a></p>
+                  <p><a href={`tel:${contact.phone}`} style={{ fontWeight: '700', color: 'var(--color-orange-text-cream)' }}>{contact.phone}</a></p>
                   <p style={{ fontSize: '0.85rem', color: 'var(--color-muted-light)' }}>Direct line for instant inquiries & booking</p>
                 </div>
               </div>
@@ -106,7 +118,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 style={{ fontSize: '1.05rem', marginBottom: '0.25rem' }}>Email Us</h4>
-                  <span style={{ display: 'inline-block', backgroundColor: '#ECE7E0', color: '#6B655C', fontSize: '0.785rem', fontWeight: '600', padding: '0.15rem 0.5rem', borderRadius: '4px' }}>[Add later]</span>
+                  <p style={{ fontWeight: '600', color: 'var(--color-orange-text-cream)' }}>{contact.email}</p>
                 </div>
               </div>
 
@@ -116,7 +128,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 style={{ fontSize: '1.05rem', marginBottom: '0.25rem' }}>Working Hours</h4>
-                  <span style={{ display: 'inline-block', backgroundColor: '#ECE7E0', color: '#6B655C', fontSize: '0.785rem', fontWeight: '600', padding: '0.15rem 0.5rem', borderRadius: '4px' }}>[Add later]</span>
+                  <p style={{ fontWeight: '600', color: 'var(--color-orange-text-cream)' }}>{contact.workingHours}</p>
                 </div>
               </div>
 
@@ -176,12 +188,9 @@ export default function ContactPage() {
                     required
                   >
                     <option value="" disabled>Select a physiotherapy service</option>
-                    <option value="Home Visit Physio">Home Visit Physio</option>
-                    <option value="Orthopedic Rehab">Orthopedic Rehab</option>
-                    <option value="Neuro Rehabilitation">Neuro Rehabilitation</option>
-                    <option value="Sports Injury Rehab">Sports Injury Rehab</option>
-                    <option value="Pediatric and Geriatric Care">Pediatric and Geriatric Care</option>
-                    <option value="Cardiopulmonary Rehab">Cardiopulmonary Rehab</option>
+                    {siteContent.services.map((serv) => (
+                      <option key={serv.id} value={serv.title}>{serv.title}</option>
+                    ))}
                   </select>
                 </div>
 

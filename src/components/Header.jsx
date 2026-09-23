@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import AnimatedLogo from './AnimatedLogo';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function Header() {
+  const { siteContent } = useSiteContent();
+  const { contact } = siteContent;
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -13,6 +17,8 @@ export default function Header() {
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
   };
+
+  const whatsappUrl = `https://wa.me/${contact.whatsappNumber}?text=${encodeURIComponent(contact.whatsappMessage)}`;
 
   return (
     <header className="site-header">
@@ -32,7 +38,7 @@ export default function Header() {
 
         <div className="nav-actions">
           <a 
-            href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
+            href={whatsappUrl} 
             target="_blank" 
             rel="noopener noreferrer" 
             className="btn btn-primary btn-sm"
@@ -57,9 +63,10 @@ export default function Header() {
           <li><NavLink to="/about" onClick={closeMobileMenu}>About Us</NavLink></li>
           <li><NavLink to="/services" onClick={closeMobileMenu}>Services</NavLink></li>
           <li><NavLink to="/contact" onClick={closeMobileMenu}>Contact Us</NavLink></li>
+          <li><NavLink to="/admin" onClick={closeMobileMenu} style={{ color: 'var(--color-orange)' }}>Admin Portal</NavLink></li>
         </ul>
         <a 
-          href="https://wa.me/919360447385?text=Hi%2C%20I%27d%20like%20to%20book%20a%20home%20physio%20visit." 
+          href={whatsappUrl} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="btn btn-primary"

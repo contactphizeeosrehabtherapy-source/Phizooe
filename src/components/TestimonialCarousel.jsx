@@ -1,29 +1,14 @@
 import React, { useState } from 'react';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export default function TestimonialCarousel() {
-  const testimonials = [
-    {
-      initials: "DG",
-      name: "Dhilipkumar G",
-      source: "Verified Google Review",
-      text: "First-time experience was great; the doctor was friendly, took time to explain the condition and treatment options clearly. Highly recommend the home visit service!"
-    },
-    {
-      initials: "VP",
-      name: "Verified Patient",
-      source: "Verified Google Review",
-      text: "Excellent, professional treatment with clear explanations and guidance throughout. Having physio at home is extremely convenient and comforting."
-    },
-    {
-      initials: "B",
-      name: "Banumathy",
-      source: "Verified Google Review",
-      text: "My mother-in-law was hospitalized for 3 months and could not walk for over a month. After Dr. Zee's dedicated therapy, she now walks independently!"
-    }
-  ];
+  const { siteContent } = useSiteContent();
+  const testimonials = siteContent.testimonials;
 
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  if (!testimonials || testimonials.length === 0) return null;
 
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
@@ -52,10 +37,10 @@ export default function TestimonialCarousel() {
               }}
             >
               {testimonials.map((item, idx) => (
-                <div key={idx} style={{ minWidth: '100%', boxSizing: 'border-box', padding: '0.5rem' }}>
+                <div key={item.id || idx} style={{ minWidth: '100%', boxSizing: 'border-box', padding: '0.5rem' }}>
                   <div className="card" style={{ padding: '2.5rem', textAlign: 'center' }}>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '0.3rem', color: 'var(--color-orange)', marginBottom: '1.25rem' }}>
-                      {[...Array(5)].map((_, i) => (
+                      {[...Array(item.rating || 5)].map((_, i) => (
                         <Star key={i} size={20} fill="currentColor" />
                       ))}
                     </div>
@@ -77,7 +62,7 @@ export default function TestimonialCarousel() {
                           justifyContent: 'center' 
                         }}
                       >
-                        {item.initials}
+                        {item.initials || 'P'}
                       </div>
                       <div style={{ textAlign: 'left' }}>
                         <div style={{ fontFamily: 'var(--font-heading)', fontWeight: '700', fontSize: '1rem' }}>{item.name}</div>
@@ -91,38 +76,40 @@ export default function TestimonialCarousel() {
           </div>
 
           {/* Carousel Controls */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginTop: '2rem' }}>
-            <button 
-              onClick={prevSlide}
-              style={{ width: '44px', height: '44px', borderRadius: '50%', border: '1px solid var(--color-border)', backgroundColor: '#FFFFFF', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              aria-label="Previous review"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-              {testimonials.map((_, i) => (
-                <div 
-                  key={i} 
-                  onClick={() => setCurrentIndex(i)}
-                  style={{
-                    width: i === currentIndex ? '24px' : '10px',
-                    height: '10px',
-                    borderRadius: '999px',
-                    backgroundColor: i === currentIndex ? 'var(--color-orange)' : 'var(--color-border)',
-                    cursor: 'pointer',
-                    transition: 'all 200ms ease'
-                  }}
-                />
-              ))}
+          {testimonials.length > 1 && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1.5rem', marginTop: '2rem' }}>
+              <button 
+                onClick={prevSlide}
+                style={{ width: '44px', height: '44px', borderRadius: '50%', border: '1px solid var(--color-border)', backgroundColor: '#FFFFFF', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                aria-label="Previous review"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                {testimonials.map((_, i) => (
+                  <div 
+                    key={i} 
+                    onClick={() => setCurrentIndex(i)}
+                    style={{
+                      width: i === currentIndex ? '24px' : '10px',
+                      height: '10px',
+                      borderRadius: '999px',
+                      backgroundColor: i === currentIndex ? 'var(--color-orange)' : 'var(--color-border)',
+                      cursor: 'pointer',
+                      transition: 'all 200ms ease'
+                    }}
+                  />
+                ))}
+              </div>
+              <button 
+                onClick={nextSlide}
+                style={{ width: '44px', height: '44px', borderRadius: '50%', border: '1px solid var(--color-border)', backgroundColor: '#FFFFFF', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                aria-label="Next review"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
-            <button 
-              onClick={nextSlide}
-              style={{ width: '44px', height: '44px', borderRadius: '50%', border: '1px solid var(--color-border)', backgroundColor: '#FFFFFF', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              aria-label="Next review"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </section>

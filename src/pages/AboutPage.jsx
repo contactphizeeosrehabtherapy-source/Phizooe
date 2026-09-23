@@ -21,15 +21,12 @@ export default function AboutPage({ onSelectDoctor }) {
       {/* Our Story */}
       <section className="section-padding bg-cream">
         <div className="container about-grid">
-          <div className="media-frame" style={{ aspectRatio: '4/3' }}>
-            <svg width="100%" height="100%" viewBox="0 0 600 450" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ background: '#EAE6DF' }}>
-              <rect width="600" height="450" fill="#EAE6DF"/>
-              <circle cx="300" cy="200" r="75" fill="#F28C1B" fillOpacity="0.15"/>
-              <path d="M260 220C260 190 280 170 300 170C320 170 340 190 340 220" stroke="#C86A00" strokeWidth="4" strokeLinecap="round"/>
-              <circle cx="300" cy="150" r="25" stroke="#C86A00" strokeWidth="4"/>
-              <text x="300" y="340" fill="#18191A" fontFamily="Plus Jakarta Sans, sans-serif" fontSize="16" fontWeight="700" textAnchor="middle">[Photo Placeholder: PhiZeeo Founders Story]</text>
-              <text x="300" y="365" fill="#5A6065" fontFamily="Inter, sans-serif" fontSize="12" textAnchor="middle">Personalized physio care provided across Chennai households</text>
-            </svg>
+          <div className="media-frame" style={{ aspectRatio: '4/3', overflow: 'hidden', borderRadius: 'var(--radius-lg)' }}>
+            <img 
+              src="/about_physio_team.png" 
+              alt="PhiZeeo Rehabilitation Team" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            />
           </div>
 
           <div>
