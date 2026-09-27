@@ -4,7 +4,7 @@ import {
   Lock, Key, Image as ImageIcon, Edit3, Users, Stethoscope, Briefcase, 
   MessageSquare, Calendar, Trash2, CheckCircle, Upload, Eye, RefreshCw, 
   Plus, ExternalLink, Download, UploadCloud, Star, Phone, MessageCircle, 
-  ShieldCheck, AlertCircle, ArrowLeft, LogOut, Check, X
+  ShieldCheck, AlertCircle, ArrowLeft, LogOut, Check, X, Camera
 } from 'lucide-react';
 import { useSiteContent } from '../context/SiteContentContext';
 
@@ -127,14 +127,38 @@ export default function AdminPage() {
     showToast('Site hero and contact info updated live!');
   };
 
-  // --- TAB 3: DOCTOR / SPECIALIST EDIT FORM ---
+  // --- TAB 3: DOCTOR / SPECIALIST EDIT FORM & PHOTO MANAGER ---
   const [editingDocId, setEditingDocId] = useState(null);
   const [docForm, setDocForm] = useState(null);
   const [showAddDocModal, setShowAddDocModal] = useState(false);
+  const [newDocImgPreview, setNewDocImgPreview] = useState('/zeedr.png');
+  const [changingPicDoc, setChangingPicDoc] = useState(null);
+  const [docPicPreview, setDocPicPreview] = useState('');
+  const [showGalleryPickerInModal, setShowGalleryPickerInModal] = useState(false);
+
+  const handleDocPhotoUpload = (file, onSuccess) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP, etc.)');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const dataUrl = e.target.result;
+      onSuccess(dataUrl);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const startEditDoc = (doc) => {
     setEditingDocId(doc.id);
     setDocForm({ ...doc, specialtiesText: doc.specialties.join('\n') });
+  };
+
+  const openChangePicModal = (doc) => {
+    setChangingPicDoc(doc);
+    setDocPicPreview(doc.img || '/zeedr.png');
+    setShowGalleryPickerInModal(false);
   };
 
   const saveDocEdit = (e) => {
@@ -165,12 +189,13 @@ export default function AdminPage() {
       role: formData.get('role'),
       credentials: formData.get('credentials'),
       experience: formData.get('experience'),
-      img: formData.get('img') || '/zeedr.png',
+      img: newDocImgPreview || formData.get('img') || '/zeedr.png',
       bio: formData.get('bio'),
       specialties: formData.get('specialties').split('\n').filter(s => s.trim())
     };
     addDoctor(newDoc);
     setShowAddDocModal(false);
+    setNewDocImgPreview('/zeedr.png');
     showToast(`New Specialist profile "${newDoc.name}" added!`);
   };
 
@@ -813,10 +838,162 @@ export default function AdminPage() {
                   <h2>Specialist Doctors & Team Profiles</h2>
                   <p>Edit staff details, credentials, profile pictures, and clinical specialties.</p>
                 </div>
-                <button onClick={() => setShowAddDocModal(true)} className="btn btn-primary btn-sm">
+                <button onClick={() => { setNewDocImgPreview('/zeedr.png'); setShowAddDocModal(true); }} className="btn btn-primary btn-sm">
                   <Plus size={16} /> Add Specialist Doctor
                 </button>
               </div>
+
+              {/* Dedicated Quick Change Doctor Picture Modal */}
+              {changingPicDoc && (
+                <div className="admin-modal-overlay">
+                  <div className="admin-modal-card" style={{ maxWidth: '520px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <Camera size={20} style={{ color: 'var(--color-orange)' }} />
+                        <h3 style={{ margin: 0 }}>Change Photo: {changingPicDoc.name}</h3>
+                      </div>
+                      <button onClick={() => setChangingPicDoc(null)} className="btn-icon">
+                        <X size={20} />
+                      </button>
+                    </div>
+
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: '1.5rem', gap: '0.5rem' }}>
+                      <img 
+                        src={docPicPreview || changingPicDoc.img} 
+                        alt={changingPicDoc.name} 
+                        style={{ 
+                          width: '100px', 
+                          height: '100px', 
+                          borderRadius: '50%', 
+                          objectFit: 'cover', 
+                          border: '3px solid var(--color-orange)',
+                          boxShadow: '0 4px 14px rgba(242, 140, 27, 0.35)' 
+                        }} 
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%231E1E1E'/%3E%3Ctext x='50' y='55' font-family='sans-serif' font-size='12' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'%3E${encodeURIComponent(changingPicDoc.name)}%3C/text%3E%3C/svg%3E`;
+                        }}
+                      />
+                      <span style={{ fontSize: '0.8rem', color: 'var(--color-muted-dark)' }}>
+                        Live Photo Preview
+                      </span>
+                    </div>
+
+                    {/* Option 1: Native Phone Photo Library / Desktop Folder Upload */}
+                    <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+                      <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.4rem' }}>
+                        <Upload size={14} style={{ color: 'var(--color-orange)' }} /> Select from Device Library or Folder
+                      </label>
+                      <div className="file-upload-dropzone" onClick={() => document.getElementById('modal-doc-pic-file-input').click()}>
+                        <UploadCloud size={30} style={{ color: 'var(--color-orange)', marginBottom: '0.4rem' }} />
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#FFFFFF', fontWeight: '600' }}>
+                          Open Phone Library / Desktop Folder
+                        </p>
+                        <span style={{ fontSize: '0.75rem', color: '#AAA' }}>Tap to select photo from gallery or files</span>
+                        <input 
+                          id="modal-doc-pic-file-input"
+                          type="file" 
+                          accept="image/*" 
+                          style={{ display: 'none' }}
+                          onChange={(e) => {
+                            if (e.target.files && e.target.files[0]) {
+                              handleDocPhotoUpload(e.target.files[0], (dataUrl) => {
+                                setDocPicPreview(dataUrl);
+                              });
+                            }
+                          }}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Option 2: Choose from Site Gallery */}
+                    <div className="form-group" style={{ marginBottom: '1.25rem' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.35rem' }}>
+                        <label style={{ margin: 0, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <ImageIcon size={14} style={{ color: 'var(--color-orange)' }} /> Choose from Site Gallery
+                        </label>
+                        <button 
+                          type="button" 
+                          style={{ fontSize: '0.75rem', color: 'var(--color-orange)', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+                          onClick={() => setShowGalleryPickerInModal(!showGalleryPickerInModal)}
+                        >
+                          {showGalleryPickerInModal ? 'Hide Gallery' : 'Select Gallery Photo'}
+                        </button>
+                      </div>
+
+                      {showGalleryPickerInModal && (
+                        <div className="doc-gallery-picker">
+                          {siteContent.pictures && siteContent.pictures.map((pic) => (
+                            <img 
+                              key={pic.id} 
+                              src={pic.url} 
+                              alt={pic.title}
+                              title={pic.title}
+                              className={`doc-gallery-item ${docPicPreview === pic.url ? 'selected' : ''}`}
+                              onClick={() => setDocPicPreview(pic.url)}
+                            />
+                          ))}
+                          <img 
+                            src="/zeedr.png" 
+                            alt="Dr. Zeenith" 
+                            title="Dr. Zeenith Default Avatar"
+                            className={`doc-gallery-item ${docPicPreview === '/zeedr.png' ? 'selected' : ''}`}
+                            onClick={() => setDocPicPreview('/zeedr.png')}
+                          />
+                          <img 
+                            src="/jdr.png" 
+                            alt="Dr. Ramya" 
+                            title="Dr. Ramya Default Avatar"
+                            className={`doc-gallery-item ${docPicPreview === '/jdr.png' ? 'selected' : ''}`}
+                            onClick={() => setDocPicPreview('/jdr.png')}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Option 3: Image URL Input */}
+                    <div className="form-group" style={{ marginBottom: '1.5rem' }}>
+                      <label>Or Paste Direct Image URL</label>
+                      <input 
+                        type="text" 
+                        value={docPicPreview} 
+                        onChange={(e) => setDocPicPreview(e.target.value)}
+                        placeholder="https://example.com/doctor-photo.jpg or /zeedr.png"
+                        className="form-control"
+                      />
+                    </div>
+
+                    <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem' }}>
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          setChangingPicDoc(null);
+                          setDocPicPreview('');
+                        }} 
+                        className="btn btn-dark"
+                      >
+                        Cancel
+                      </button>
+                      <button 
+                        type="button" 
+                        onClick={() => {
+                          if (!docPicPreview) {
+                            alert('Please select or upload a picture first.');
+                            return;
+                          }
+                          updateDoctor(changingPicDoc.id, { img: docPicPreview });
+                          showToast(`Profile picture updated for ${changingPicDoc.name}!`);
+                          setChangingPicDoc(null);
+                          setDocPicPreview('');
+                        }} 
+                        className="btn btn-primary"
+                      >
+                        Save Photo Changes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Add Doctor Modal */}
               {showAddDocModal && (
@@ -852,9 +1029,44 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      <div className="form-group" style={{ marginTop: '1rem' }}>
-                        <label>Profile Picture Photo URL</label>
-                        <input type="text" name="img" placeholder="/zeedr.png or image URL" className="form-control" />
+                      <div className="form-group" style={{ marginTop: '1rem', background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--color-dark-border)' }}>
+                        <label style={{ color: 'var(--color-orange)', fontWeight: '700', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Camera size={16} /> Doctor Profile Picture
+                        </label>
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                          <img 
+                            src={newDocImgPreview} 
+                            alt="Preview" 
+                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--color-orange)', boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }} 
+                          />
+                          <div style={{ flex: 1, minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <label className="btn btn-primary btn-xs" style={{ margin: 0, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', width: 'fit-content' }}>
+                              <Upload size={14} /> Upload Photo (Phone Library / Folder)
+                              <input 
+                                type="file" 
+                                accept="image/*" 
+                                style={{ display: 'none' }}
+                                onChange={(e) => {
+                                  if (e.target.files && e.target.files[0]) {
+                                    handleDocPhotoUpload(e.target.files[0], (dataUrl) => {
+                                      setNewDocImgPreview(dataUrl);
+                                      showToast('Photo loaded into form!');
+                                    });
+                                  }
+                                }}
+                              />
+                            </label>
+                            <input 
+                              type="text" 
+                              name="img" 
+                              value={newDocImgPreview}
+                              onChange={(e) => setNewDocImgPreview(e.target.value)}
+                              placeholder="/zeedr.png or image URL" 
+                              className="form-control" 
+                              style={{ fontSize: '0.85rem' }}
+                            />
+                          </div>
+                        </div>
                       </div>
 
                       <div className="form-group" style={{ marginTop: '1rem' }}>
@@ -930,17 +1142,42 @@ export default function AdminPage() {
                         </div>
                       </div>
 
-                      <div className="form-group" style={{ marginTop: '1rem' }}>
-                        <label>Profile Picture URL</label>
-                        <div style={{ display: 'flex', gap: '0.75rem' }}>
-                          <input 
-                            type="text" 
-                            value={docForm.img} 
-                            onChange={(e) => setDocForm({ ...docForm, img: e.target.value })}
-                            className="form-control"
-                            style={{ flex: 1 }}
+                      <div className="form-group" style={{ marginTop: '1rem', background: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '8px', border: '1px solid var(--color-dark-border)' }}>
+                        <label style={{ color: 'var(--color-orange)', fontWeight: '700', marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                          <Camera size={16} /> Doctor Profile Picture
+                        </label>
+                        <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                          <img 
+                            src={docForm.img} 
+                            alt="Avatar" 
+                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', border: '3px solid var(--color-orange)', boxShadow: '0 2px 8px rgba(0,0,0,0.4)' }} 
                           />
-                          <img src={docForm.img} alt="Avatar" style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover' }} />
+                          <div style={{ flex: 1, minWidth: '220px', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                            <label className="btn btn-primary btn-xs" style={{ margin: 0, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '0.4rem', width: 'fit-content' }}>
+                              <Upload size={14} /> Upload Photo (Phone Library / Folder)
+                              <input 
+                                type="file" 
+                                accept="image/*" 
+                                style={{ display: 'none' }}
+                                onChange={(e) => {
+                                  if (e.target.files && e.target.files[0]) {
+                                    handleDocPhotoUpload(e.target.files[0], (dataUrl) => {
+                                      setDocForm({ ...docForm, img: dataUrl });
+                                      showToast('New photo loaded!');
+                                    });
+                                  }
+                                }}
+                              />
+                            </label>
+                            <input 
+                              type="text" 
+                              value={docForm.img} 
+                              onChange={(e) => setDocForm({ ...docForm, img: e.target.value })}
+                              placeholder="/zeedr.png or Image URL" 
+                              className="form-control"
+                              style={{ fontSize: '0.85rem' }}
+                            />
+                          </div>
                         </div>
                       </div>
 
@@ -977,12 +1214,42 @@ export default function AdminPage() {
               <div className="doctors-admin-grid">
                 {siteContent.doctors.map((doc) => (
                   <div key={doc.id} className="admin-card doctor-admin-card">
+                    {/* Hidden file input to directly open Phone Photo Library or Desktop Folder */}
+                    <input 
+                      id={`doc-card-file-${doc.id}`}
+                      type="file" 
+                      accept="image/*" 
+                      style={{ display: 'none' }}
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          handleDocPhotoUpload(e.target.files[0], (dataUrl) => {
+                            updateDoctor(doc.id, { img: dataUrl });
+                            showToast(`Photo updated for ${doc.name}!`);
+                          });
+                          e.target.value = '';
+                        }
+                      }}
+                    />
+
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
-                      <img 
-                        src={doc.img} 
-                        alt={doc.name} 
-                        style={{ width: '64px', height: '64px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--color-orange)' }} 
-                      />
+                      <div 
+                        className="doctor-avatar-wrapper"
+                        onClick={() => document.getElementById(`doc-card-file-${doc.id}`)?.click()}
+                        title="Click to open Phone Library / Desktop Folder"
+                      >
+                        <img 
+                          src={doc.img} 
+                          alt={doc.name} 
+                          className="doc-avatar-img"
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%231E1E1E'/%3E%3Ctext x='32' y='36' font-family='sans-serif' font-size='10' font-weight='bold' fill='%23FFFFFF' text-anchor='middle'%3E${encodeURIComponent(doc.name)}%3C/text%3E%3C/svg%3E`;
+                          }}
+                        />
+                        <div className="doc-avatar-badge" title="Upload from Phone Library / Desktop Folder">
+                          <Camera size={13} />
+                        </div>
+                      </div>
                       <div>
                         <h3 style={{ fontSize: '1.1rem', marginBottom: '0.2rem' }}>{doc.name}</h3>
                         <p style={{ fontSize: '0.85rem', color: 'var(--color-orange)' }}>{doc.role}</p>
@@ -1003,9 +1270,24 @@ export default function AdminPage() {
                       </div>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '0.5rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--color-dark-border)' }}>
-                      <button onClick={() => startEditDoc(doc)} className="btn btn-outline-light btn-xs" style={{ flex: 1 }}>
-                        <Edit3 size={14} /> Edit Profile
+                    <div style={{ display: 'flex', gap: '0.4rem', marginTop: 'auto', paddingTop: '1rem', borderTop: '1px solid var(--color-dark-border)' }}>
+                      <button 
+                        onClick={() => document.getElementById(`doc-card-file-${doc.id}`)?.click()} 
+                        className="btn btn-primary btn-xs" 
+                        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                        title="Open Phone Photo Library / Desktop Folder"
+                      >
+                        <Upload size={13} /> Change Photo
+                      </button>
+                      <button 
+                        onClick={() => openChangePicModal(doc)} 
+                        className="btn btn-outline-light btn-xs"
+                        title="More Options (Gallery / URL)"
+                      >
+                        <ImageIcon size={13} />
+                      </button>
+                      <button onClick={() => startEditDoc(doc)} className="btn btn-outline-light btn-xs" title="Edit Doctor Details">
+                        <Edit3 size={13} />
                       </button>
                       <button 
                         onClick={() => {
@@ -1015,8 +1297,9 @@ export default function AdminPage() {
                           }
                         }} 
                         className="btn btn-danger btn-xs"
+                        title="Delete Doctor"
                       >
-                        <Trash2 size={14} />
+                        <Trash2 size={13} />
                       </button>
                     </div>
                   </div>
@@ -1290,59 +1573,116 @@ export default function AdminPage() {
                   </p>
                 </div>
               ) : (
-                <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
-                  <div className="appointments-table-container">
-                    <table className="admin-table">
-                      <thead>
-                        <tr>
-                          <th>Date / Time</th>
-                          <th>Patient Name</th>
-                          <th>Phone</th>
-                          <th>Requested Service</th>
-                          <th>Preferred Date</th>
-                          <th>Status</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {siteContent.appointments.map((app) => (
-                          <tr key={app.id}>
-                            <td style={{ fontSize: '0.8rem', color: 'var(--color-muted-dark)' }}>
-                              {new Date(app.createdAt).toLocaleDateString()}
-                            </td>
-                            <td style={{ fontWeight: '600' }}>{app.fullName}</td>
-                            <td>{app.phone}</td>
-                            <td><span className="badge-chip">{app.service}</span></td>
-                            <td>{app.preferredDate}</td>
-                            <td>
-                              <select 
-                                value={app.status}
-                                onChange={(e) => {
-                                  updateAppointmentStatus(app.id, e.target.value);
-                                  showToast(`Updated status to ${e.target.value}`);
-                                }}
-                                className={`status-select-pill ${app.status}`}
-                              >
-                                <option value="pending">Pending ⏳</option>
-                                <option value="contacted">Contacted 📞</option>
-                                <option value="completed">Completed ✅</option>
-                              </select>
-                            </td>
-                            <td>
-                              <a 
-                                href={`https://wa.me/${app.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${app.fullName}, this is Dr. Zeenith from PhiZeeo Physiotherapy following up on your home visit request for ${app.service}.`)}`}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="btn btn-primary btn-xs"
-                                style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
-                              >
-                                <MessageCircle size={14} /> Reply WhatsApp
-                              </a>
-                            </td>
+                <div>
+                  {/* Desktop Table View */}
+                  <div className="admin-card appointments-desktop-only" style={{ padding: 0, overflow: 'hidden' }}>
+                    <div className="appointments-table-container">
+                      <table className="admin-table">
+                        <thead>
+                          <tr>
+                            <th>Date / Time</th>
+                            <th>Patient Name</th>
+                            <th>Phone</th>
+                            <th>Requested Service</th>
+                            <th>Preferred Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {siteContent.appointments.map((app) => (
+                            <tr key={app.id}>
+                              <td style={{ fontSize: '0.8rem', color: 'var(--color-muted-dark)' }}>
+                                {new Date(app.createdAt).toLocaleDateString()}
+                              </td>
+                              <td style={{ fontWeight: '600' }}>{app.fullName}</td>
+                              <td>{app.phone}</td>
+                              <td><span className="badge-chip">{app.service}</span></td>
+                              <td>{app.preferredDate}</td>
+                              <td>
+                                <select 
+                                  value={app.status}
+                                  onChange={(e) => {
+                                    updateAppointmentStatus(app.id, e.target.value);
+                                    showToast(`Updated status to ${e.target.value}`);
+                                  }}
+                                  className={`status-select-pill ${app.status}`}
+                                >
+                                  <option value="pending">Pending ⏳</option>
+                                  <option value="contacted">Contacted 📞</option>
+                                  <option value="completed">Completed ✅</option>
+                                </select>
+                              </td>
+                              <td>
+                                <a 
+                                  href={`https://wa.me/${app.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${app.fullName}, this is Dr. Zeenith from PhiZeeo Physiotherapy following up on your home visit request for ${app.service}.`)}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="btn btn-primary btn-xs"
+                                  style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}
+                                >
+                                  <MessageCircle size={14} /> Reply WhatsApp
+                                </a>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  {/* Mobile Appointment Cards */}
+                  <div className="appointments-mobile-cards">
+                    {siteContent.appointments.map((app) => (
+                      <div key={app.id} className="admin-card appointment-mobile-card" style={{ marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem', gap: '0.5rem' }}>
+                          <div>
+                            <h4 style={{ fontSize: '1rem', fontWeight: '700', margin: 0, color: '#FFFFFF' }}>{app.fullName}</h4>
+                            <span style={{ fontSize: '0.75rem', color: 'var(--color-muted-dark)' }}>
+                              Requested: {new Date(app.createdAt).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <select 
+                            value={app.status}
+                            onChange={(e) => {
+                              updateAppointmentStatus(app.id, e.target.value);
+                              showToast(`Updated status to ${e.target.value}`);
+                            }}
+                            className={`status-select-pill ${app.status}`}
+                            style={{ fontSize: '0.8rem', padding: '0.3rem 0.5rem' }}
+                          >
+                            <option value="pending">Pending ⏳</option>
+                            <option value="contacted">Contacted 📞</option>
+                            <option value="completed">Completed ✅</option>
+                          </select>
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginBottom: '1rem', fontSize: '0.85rem' }}>
+                          <div><strong style={{ color: 'var(--color-muted-dark)' }}>Service:</strong> <span className="badge-chip">{app.service}</span></div>
+                          <div><strong style={{ color: 'var(--color-muted-dark)' }}>Phone:</strong> <a href={`tel:${app.phone}`} style={{ color: 'var(--color-orange)', fontWeight: '600' }}>{app.phone}</a></div>
+                          <div><strong style={{ color: 'var(--color-muted-dark)' }}>Preferred Date:</strong> {app.preferredDate}</div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '0.5rem' }}>
+                          <a 
+                            href={`https://wa.me/${app.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi ${app.fullName}, this is Dr. Zeenith from PhiZeeo Physiotherapy following up on your home visit request for ${app.service}.`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary btn-xs"
+                            style={{ flex: 1, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', padding: '0.55rem' }}
+                          >
+                            <MessageCircle size={14} /> WhatsApp Patient
+                          </a>
+                          <a 
+                            href={`tel:${app.phone.replace(/[^0-9]/g, '')}`}
+                            className="btn btn-outline-light btn-xs"
+                            style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '0.3rem', padding: '0.55rem', minWidth: '70px' }}
+                          >
+                            <Phone size={14} /> Call
+                          </a>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               )}
