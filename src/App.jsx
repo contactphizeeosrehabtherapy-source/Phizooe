@@ -15,45 +15,10 @@ import { SiteContentProvider } from './context/SiteContentContext';
 
 // ─────────────────────────────────────────────
 // 🚧 Set to true = maintenance page, false = live site
-const MAINTENANCE_MODE = true;
+const MAINTENANCE_MODE = false;
 // ─────────────────────────────────────────────
 
-function MaintenancePage() {
-  return (
-    <div style={{
-      minHeight: '100vh',
-      background: '#fff',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textAlign: 'center',
-      padding: '2rem',
-      fontFamily: 'sans-serif',
-      color: '#111',
-    }}>
-      <img
-        src="/zeedr.png"
-        alt="PhiZeeo logo"
-        style={{ width: 80, marginBottom: '1.5rem' }}
-        onError={e => { e.target.style.display = 'none'; }}
-      />
-      <h1 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '0.75rem' }}>
-        🚧 Under Maintenance
-      </h1>
-      <p style={{ fontSize: '1rem', color: '#555', maxWidth: 380, lineHeight: 1.6, marginBottom: '1.5rem' }}>
-        We're making some improvements to serve you better.<br />
-        We'll be back shortly!
-      </p>
-      <p style={{ fontSize: '0.9rem', color: '#888' }}>
-        Need help? Call us at{' '}
-        <a href="tel:+919360447385" style={{ color: '#E87B2B', fontWeight: 600, textDecoration: 'none' }}>
-          +91 93604 47385
-        </a>
-      </p>
-    </div>
-  );
-}
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -91,7 +56,7 @@ function MainLayout() {
 }
 
 export default function App() {
-  if (MAINTENANCE_MODE) return <MaintenancePage />;
+
   return (
     <SiteContentProvider>
       <MainLayout />
